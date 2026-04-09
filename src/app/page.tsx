@@ -6,7 +6,8 @@ import {
   ArrowLeft, CheckCircle2, AlertTriangle, Download,
   User, Building2, ChevronRight, ClipboardList,
   TrendingUp, Star, Award, BarChart3, RotateCcw,
-  HeartPulse, Activity, Info, Leaf, Lock
+  HeartPulse, Activity, Info, Leaf, Lock, BedDouble,
+  Users, MapPin, Hospital
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -20,6 +21,9 @@ import { questions, TOTAL_QUESTIONS } from '@/lib/checkup-questions';
 import {
   CATEGORIES,
   ESTABLISHMENT_TYPES,
+  BED_COUNT_OPTIONS,
+  CME_PROFESSIONALS_OPTIONS,
+  REGIONS,
   CategoryKey,
   ScreenType,
   RegistrationData,
@@ -216,16 +220,16 @@ function IntroScreen({ onStart }: { onStart: () => void }) {
 // ============================
 // Screen 2: Registration Phase 1
 // ============================
-function RegisterScreen1({ data, onChange, onNext }: {
+function RegisterScreen1({ data, onChange, onNext, onBack }: {
   data: RegistrationData;
   onChange: (data: RegistrationData) => void;
   onNext: () => void;
+  onBack: () => void;
 }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
-    if (!data.fullName.trim()) newErrors.fullName = 'Nome é obrigatório';
     if (!data.position.trim()) newErrors.position = 'Cargo é obrigatório';
     if (!data.establishmentType) newErrors.establishmentType = 'Selecione o tipo de estabelecimento';
     setErrors(newErrors);
@@ -241,18 +245,23 @@ function RegisterScreen1({ data, onChange, onNext }: {
       <div className="w-full max-w-2xl">
         {/* Progress indicator */}
         <div className="flex items-center justify-center gap-2 mb-8">
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1 text-sm font-medium text-primary">
             <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">1</span>
-            <span className="ml-1">Cadastro</span>
+            <span className="ml-1">Dados Profissionais</span>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <span className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-bold">2</span>
-            <span className="ml-1">Consentimento</span>
+            <span className="ml-1">Dados da Instituição</span>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <span className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-bold">3</span>
+            <span className="ml-1">Consentimento</span>
+          </div>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+            <span className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-bold">4</span>
             <span className="ml-1">Avaliação</span>
           </div>
         </div>
@@ -262,25 +271,12 @@ function RegisterScreen1({ data, onChange, onNext }: {
             <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
               <User className="w-6 h-6 text-primary" />
             </div>
-            <CardTitle className="text-2xl">Cadastro</CardTitle>
+            <CardTitle className="text-2xl">Dados Profissionais</CardTitle>
             <CardDescription>
-              Informe seus dados profissionais para personalizar o checkup
+              Informe seus dados e o tipo de estabelecimento para personalizar o checkup
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Full Name */}
-            <div className="space-y-2">
-              <Label htmlFor="fullName">Nome Completo</Label>
-              <Input
-                id="fullName"
-                placeholder="Digite seu nome completo"
-                value={data.fullName}
-                onChange={(e) => onChange({ ...data, fullName: e.target.value })}
-                className={errors.fullName ? 'border-destructive' : ''}
-              />
-              {errors.fullName && <p className="text-xs text-destructive">{errors.fullName}</p>}
-            </div>
-
             {/* Position */}
             <div className="space-y-2">
               <Label htmlFor="position">Cargo</Label>
@@ -317,10 +313,16 @@ function RegisterScreen1({ data, onChange, onNext }: {
               </div>
             </div>
 
-            <Button onClick={handleNext} className="w-full" size="lg">
-              Próximo
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+            <div className="flex gap-3">
+              <Button onClick={onBack} variant="outline" size="lg" className="shrink-0">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Voltar
+              </Button>
+              <Button onClick={handleNext} className="w-full" size="lg">
+                Próximo
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -329,13 +331,205 @@ function RegisterScreen1({ data, onChange, onNext }: {
 }
 
 // ============================
-// Screen 3: Registration Phase 2 + LGPD
+// Screen 3: Registration Phase 2 - Institutional Data
 // ============================
-function RegisterScreen2({ consent1, consent2, onConsentChange, onStart }: {
+function RegisterScreen2({ data, onChange, onNext, onBack }: {
+  data: RegistrationData;
+  onChange: (data: RegistrationData) => void;
+  onNext: () => void;
+  onBack: () => void;
+}) {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const selectedRegion = REGIONS.find(r => r.id === data.region);
+  const availableStates = selectedRegion?.states || [];
+
+  const validate = (): boolean => {
+    const newErrors: Record<string, string> = {};
+    if (!data.bedCount) newErrors.bedCount = 'Selecione a quantidade de leitos';
+    if (!data.cmeProfessionals) newErrors.cmeProfessionals = 'Selecione a quantidade de profissionais';
+    if (!data.region) newErrors.region = 'Selecione a região';
+    if (!data.state) newErrors.state = 'Selecione o estado';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNext = () => {
+    if (validate()) onNext();
+  };
+
+  const handleRegionChange = (regionId: string) => {
+    onChange({ ...data, region: regionId, state: '' });
+  };
+
+  return (
+    <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center px-4 py-10">
+      <div className="w-full max-w-2xl">
+        {/* Progress indicator */}
+        <div className="flex items-center justify-center gap-2 mb-8">
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+            <CheckCircle2 className="w-4 h-4 text-primary" />
+            <span>Dados Profissionais</span>
+          </div>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          <div className="flex items-center gap-1 text-sm font-medium text-primary">
+            <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">2</span>
+            <span className="ml-1">Dados da Instituição</span>
+          </div>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+            <span className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-bold">3</span>
+            <span className="ml-1">Consentimento</span>
+          </div>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+            <span className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-bold">4</span>
+            <span className="ml-1">Avaliação</span>
+          </div>
+        </div>
+
+        <Card className="border-0 shadow-lg">
+          <CardHeader className="text-center">
+            <div className="mx-auto w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center mb-2">
+              <Hospital className="w-6 h-6 text-teal-600" />
+            </div>
+            <CardTitle className="text-2xl">Dados da Instituição</CardTitle>
+            <CardDescription>
+              Informe os dados operacionais e a localização da instituição
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Bed Count */}
+            <div className="space-y-3">
+              <Label className="flex items-center gap-2">
+                <BedDouble className="w-4 h-4 text-primary" />
+                Quantidade de Leitos
+              </Label>
+              {errors.bedCount && <p className="text-xs text-destructive">{errors.bedCount}</p>}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {BED_COUNT_OPTIONS.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => onChange({ ...data, bedCount: option.id })}
+                    className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all hover:border-primary/40 hover:bg-primary/5 ${
+                      data.bedCount === option.id
+                        ? 'border-primary bg-primary/10 shadow-sm'
+                        : 'border-border bg-card'
+                    }`}
+                  >
+                    <span className="text-lg shrink-0">🛏️</span>
+                    <span className="text-sm font-medium leading-tight">{option.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* CME Professionals */}
+            <div className="space-y-3">
+              <Label className="flex items-center gap-2">
+                <Users className="w-4 h-4 text-primary" />
+                Quantidade de profissionais que atuam na CME
+              </Label>
+              {errors.cmeProfessionals && <p className="text-xs text-destructive">{errors.cmeProfessionals}</p>}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {CME_PROFESSIONALS_OPTIONS.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => onChange({ ...data, cmeProfessionals: option.id })}
+                    className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all hover:border-primary/40 hover:bg-primary/5 ${
+                      data.cmeProfessionals === option.id
+                        ? 'border-primary bg-primary/10 shadow-sm'
+                        : 'border-border bg-card'
+                    }`}
+                  >
+                    <span className="text-lg shrink-0">👷</span>
+                    <span className="text-sm font-medium leading-tight">{option.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Region */}
+            <div className="space-y-3">
+              <Label className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-primary" />
+                Região do Brasil onde está localizada a instituição
+              </Label>
+              {errors.region && <p className="text-xs text-destructive">{errors.region}</p>}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {REGIONS.map((region) => (
+                  <button
+                    key={region.id}
+                    type="button"
+                    onClick={() => handleRegionChange(region.id)}
+                    className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all hover:border-primary/40 hover:bg-primary/5 ${
+                      data.region === region.id
+                        ? 'border-primary bg-primary/10 shadow-sm'
+                        : 'border-border bg-card'
+                    }`}
+                  >
+                    <span className="text-lg shrink-0">📍</span>
+                    <span className="text-sm font-medium leading-tight">{region.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* State - only show when region is selected */}
+            {data.region && (
+              <div className="space-y-3">
+                <Label className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-primary" />
+                  Estado
+                </Label>
+                {errors.state && <p className="text-xs text-destructive">{errors.state}</p>}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {availableStates.map((state) => (
+                    <button
+                      key={state.id}
+                      type="button"
+                      onClick={() => onChange({ ...data, state: state.id })}
+                      className={`flex items-center gap-2 p-2.5 rounded-xl border text-left transition-all hover:border-primary/40 hover:bg-primary/5 ${
+                        data.state === state.id
+                          ? 'border-primary bg-primary/10 shadow-sm'
+                          : 'border-border bg-card'
+                      }`}
+                    >
+                      <span className="text-sm font-medium leading-tight">{state.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="flex gap-3">
+              <Button onClick={onBack} variant="outline" size="lg" className="shrink-0">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Voltar
+              </Button>
+              <Button onClick={handleNext} className="w-full" size="lg">
+                Próximo
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+// ============================
+// Screen 3b: Consent (LGPD)
+// ============================
+function ConsentScreen({ consent1, consent2, onConsentChange, onStart, onBack }: {
   consent1: boolean;
   consent2: boolean;
   onConsentChange: (c1: boolean, c2: boolean) => void;
   onStart: () => void;
+  onBack: () => void;
 }) {
   return (
     <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center px-4 py-10">
@@ -344,16 +538,21 @@ function RegisterScreen2({ consent1, consent2, onConsentChange, onStart }: {
         <div className="flex items-center justify-center gap-2 mb-8">
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <CheckCircle2 className="w-4 h-4 text-primary" />
-            <span>Cadastro</span>
+            <span>Dados Profissionais</span>
+          </div>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+            <CheckCircle2 className="w-4 h-4 text-primary" />
+            <span>Dados da Instituição</span>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
           <div className="flex items-center gap-1 text-sm font-medium text-primary">
-            <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">2</span>
+            <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">3</span>
             <span className="ml-1">Consentimento</span>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
-            <span className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-bold">3</span>
+            <span className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-bold">4</span>
             <span className="ml-1">Avaliação</span>
           </div>
         </div>
@@ -378,7 +577,7 @@ function RegisterScreen2({ consent1, consent2, onConsentChange, onStart }: {
               <Separator />
               <p>
                 Ao realizar este checkup, você consente com a coleta e o tratamento dos dados
-                informados, incluindo nome, cargo, tipo de estabelecimento e as respostas
+                informados, incluindo cargo, tipo de estabelecimento, dados operacionais e as respostas
                 fornecidas no questionário de avaliação.
               </p>
               <p>
@@ -452,15 +651,21 @@ function RegisterScreen2({ consent1, consent2, onConsentChange, onStart }: {
               </p>
             </div>
 
-            <Button
-              onClick={onStart}
-              className="w-full"
-              size="lg"
-              disabled={!consent1 || !consent2}
-            >
-              Iniciar Avaliação
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+            <div className="flex gap-3">
+              <Button onClick={onBack} variant="outline" size="lg" className="shrink-0">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Voltar
+              </Button>
+              <Button
+                onClick={onStart}
+                className="w-full"
+                size="lg"
+                disabled={!consent1 || !consent2}
+              >
+                Iniciar Avaliação
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -709,12 +914,14 @@ Data: ${new Date().toLocaleDateString('pt-BR')}
 Avaliador: Klever Oliveira Lopes
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-DADOS DO ESTABELECIMENTO
+DADOS DA INSTITUIÇÃO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Nome: ${registrationData.fullName}
 Cargo: ${registrationData.position}
 Tipo: ${ESTABLISHMENT_TYPES.find(t => t.id === registrationData.establishmentType)?.label || registrationData.establishmentType}
+Leitos: ${BED_COUNT_OPTIONS.find(b => b.id === registrationData.bedCount)?.label || registrationData.bedCount}
+Profissionais CME: ${CME_PROFESSIONALS_OPTIONS.find(p => p.id === registrationData.cmeProfessionals)?.label || registrationData.cmeProfessionals}
+Localização: ${REGIONS.find(r => r.id === registrationData.region)?.label || ''} - ${REGIONS.find(r => r.id === registrationData.region)?.states.find(s => s.id === registrationData.state)?.label || ''}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RESULTADO GERAL
@@ -748,7 +955,7 @@ Não substitui auditorias regulatórias oficiais.
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `checkup-cme-${registrationData.fullName.replace(/\s/g, '-').toLowerCase()}-${new Date().toISOString().slice(0, 10)}.txt`;
+    link.download = `checkup-cme-${registrationData.establishmentType}-${new Date().toISOString().slice(0, 10)}.txt`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -762,7 +969,12 @@ Não substitui auditorias regulatórias oficiais.
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">Resultado do Checkup</h1>
           <p className="text-white/80">
-            {registrationData.fullName} — {ESTABLISHMENT_TYPES.find(t => t.id === registrationData.establishmentType)?.label}
+            {ESTABLISHMENT_TYPES.find(t => t.id === registrationData.establishmentType)?.label}
+            {registrationData.region && registrationData.state && (
+              <> — {REGIONS.find(r => r.id === registrationData.region)?.label} — {
+                REGIONS.find(r => r.id === registrationData.region)?.states.find(s => s.id === registrationData.state)?.label
+              }</>
+            )}
           </p>
         </div>
       </div>
@@ -897,9 +1109,12 @@ Não substitui auditorias regulatórias oficiais.
 export default function Home() {
   const [screen, setScreen] = useState<ScreenType>('intro');
   const [registrationData, setRegistrationData] = useState<RegistrationData>({
-    fullName: '',
     position: '',
     establishmentType: '',
+    bedCount: '',
+    cmeProfessionals: '',
+    region: '',
+    state: '',
   });
   const [consent1, setConsent1] = useState(false);
   const [consent2, setConsent2] = useState(false);
@@ -950,6 +1165,10 @@ export default function Home() {
     setScreen('register2');
   };
 
+  const handleConsentBack = () => {
+    setScreen('register2');
+  };
+
   const handleAssessmentStart = () => {
     setScreen('assessment');
   };
@@ -969,7 +1188,7 @@ export default function Home() {
 
   const handleRestart = () => {
     setScreen('intro');
-    setRegistrationData({ fullName: '', position: '', establishmentType: '' });
+    setRegistrationData({ position: '', establishmentType: '', bedCount: '', cmeProfessionals: '', region: '', state: '' });
     setConsent1(false);
     setConsent2(false);
     setResponses(new Map());
@@ -985,19 +1204,26 @@ export default function Home() {
           data={registrationData}
           onChange={setRegistrationData}
           onNext={handleRegisterNext}
+          onBack={() => setScreen('intro')}
         />
       );
     case 'register2':
       return (
         <RegisterScreen2
+          data={registrationData}
+          onChange={setRegistrationData}
+          onNext={() => setScreen('consent')}
+          onBack={() => setScreen('register1')}
+        />
+      );
+    case 'consent':
+      return (
+        <ConsentScreen
           consent1={consent1}
           consent2={consent2}
-          onConsentChange={setConsent1}
-          onStart={() => {
-            setConsent1(consent1);
-            setConsent2(consent2);
-            handleAssessmentStart();
-          }}
+          onConsentChange={(c1, c2) => { setConsent1(c1); setConsent2(c2); }}
+          onStart={handleAssessmentStart}
+          onBack={handleConsentBack}
         />
       );
     case 'assessment':
