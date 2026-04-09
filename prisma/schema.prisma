@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Assessment {
+  id                  String   @id @default(cuid())
+  fullName            String
+  position            String
+  establishmentType   String
+  consentGiven        Boolean
+  totalScore          Float
+  managementScore     Float?
+  processScore        Float?
+  technologyScore     Float?
+  financialScore      Float?
+  lgpdScore           Float?
+  createdAt           DateTime @default(now())
+  responses           String
+}
