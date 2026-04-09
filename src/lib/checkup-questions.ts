@@ -631,32 +631,32 @@ export const checkupQuestions: Question[] = [
     id: 'processo_9',
     category: 'processo',
     question: 'Como é feito o controle dos testes: Bowie&Dick (B&D), Indicador Biológico (IB), Indicador Químico (IQ), Pacote Desafio (PCD), Helix, Teste de Limpeza (TL) e Teste de Selagem (TS)?',
-    description: 'Testes de validação são obrigatórios e essenciais para segurança.',
+    description: 'O controle e registro dos testes de validação são obrigatórios e essenciais para a segurança do processo.',
     options: [
       { 
         value: 1, 
-        label: 'Registramos em papel, sem vinculação com os lotes processados',
-        impact: 'Não conformidade, impossibilidade de rastreabilidade, riscos regulatórios'
+        label: 'Não realizamos todos os testes ou registramos em papel, sem vinculação com os lotes processados',
+        impact: 'Não conformidade regulatória, impossibilidade de rastreabilidade, riscos assistenciais graves'
       },
       { 
         value: 2, 
-        label: 'Arquivamos os resultados, mas de forma isolada',
-        impact: 'Difícil consulta, sem vinculação automática com ciclos e lotes'
+        label: 'Realizamos alguns testes, mas o registro é feito de forma isolada e sem integração',
+        impact: 'Controle parcial, difícil consulta, sem vinculação automática com ciclos e lotes'
       },
       { 
         value: 3, 
-        label: 'Registramos no sistema, mas o processo pode seguir sem validação',
-        impact: 'Controle passivo, risco de liberação sem validação completa'
+        label: 'Realizamos e registramos os testes no sistema, mas o processo pode seguir sem validação completa',
+        impact: 'Controle passivo, risco de liberação de materiais sem validação de todos os testes'
       },
       { 
         value: 4, 
-        label: 'Sistema exige registro obrigatório e bloqueia liberação sem validação',
-        impact: 'Blindagem operacional, conformidade garantida, segurança do paciente'
+        label: 'Todos os testes registrados e o sistema bloqueia a liberação sem validação completa de B&D, IB, IQ, PCD, Helix, TL e TS',
+        impact: 'Blindagem operacional total, conformidade garantida, segurança do paciente'
       },
       { 
         value: 0, 
         label: 'Não possuo esta informação',
-        impact: 'FALTA DE VISIBILIDADE: desconhecer os testes de validação é um risco grave'
+        impact: 'FALTA DE VISIBILIDADE: desconhecer o controle dos testes de validação é um risco grave'
       },
     ],
     weight: 3,
