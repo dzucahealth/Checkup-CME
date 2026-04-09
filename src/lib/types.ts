@@ -53,7 +53,7 @@ export interface CategoryScore {
 export interface AssessmentResult {
   totalScore: number;
   totalPercentage: number;
-  classification: 'Excelente' | 'Bom' | 'Regular' | 'Precisa Melhorar';
+  classification: 'Crítico' | 'Atenção' | 'Moderado' | 'Avançado';
   categoryScores: CategoryScore[];
   responses: AssessmentResponse[];
   visibilityGaps: string[];
@@ -157,26 +157,26 @@ export const REGIONS = [
 ];
 
 export function getClassification(percentage: number): AssessmentResult['classification'] {
-  if (percentage >= 80) return 'Excelente';
-  if (percentage >= 60) return 'Bom';
-  if (percentage >= 40) return 'Regular';
-  return 'Precisa Melhorar';
+  if (percentage >= 70) return 'Avançado';
+  if (percentage >= 50) return 'Moderado';
+  if (percentage >= 30) return 'Atenção';
+  return 'Crítico';
 }
 
 export function getClassificationColor(classification: AssessmentResult['classification']): string {
   switch (classification) {
-    case 'Excelente': return 'text-emerald-600';
-    case 'Bom': return 'text-teal-600';
-    case 'Regular': return 'text-amber-600';
-    case 'Precisa Melhorar': return 'text-red-600';
+    case 'Avançado': return 'text-teal-600';
+    case 'Moderado': return 'text-amber-600';
+    case 'Atenção': return 'text-orange-600';
+    case 'Crítico': return 'text-red-600';
   }
 }
 
 export function getClassificationBg(classification: AssessmentResult['classification']): string {
   switch (classification) {
-    case 'Excelente': return 'bg-emerald-50 border-emerald-200';
-    case 'Bom': return 'bg-teal-50 border-teal-200';
-    case 'Regular': return 'bg-amber-50 border-amber-200';
-    case 'Precisa Melhorar': return 'bg-red-50 border-red-200';
+    case 'Avançado': return 'bg-teal-50 border-teal-200';
+    case 'Moderado': return 'bg-amber-50 border-amber-200';
+    case 'Atenção': return 'bg-orange-50 border-orange-200';
+    case 'Crítico': return 'bg-red-50 border-red-200';
   }
 }

@@ -1089,10 +1089,10 @@ Não substitui auditorias regulatórias oficiais.
               {classification}
             </div>
             <p className="text-sm text-muted-foreground mt-3 text-center max-w-md">
-              {classification === 'Excelente' && 'Parabéns! Seu CME apresenta um alto nível de conformidade e maturidade nos processos.'}
-              {classification === 'Bom' && 'Seu CME está em um bom caminho, mas ainda há oportunidades de melhoria em algumas áreas.'}
-              {classification === 'Regular' && 'Seu CME necessita de melhorias significativas em diversas áreas. Recomendamos um plano de ação prioritário.'}
-              {classification === 'Precisa Melhorar' && 'Seu CME apresenta deficiências críticas que necessitam de atenção imediata. Recomendamos suporte especializado.'}
+              {classification === 'Avançado' && 'Sua CME apresenta um bom nível de maturidade, porém sempre existem oportunidades de otimização. Custo baixo nem sempre significa eficiência — pode indicar subinvestimento em monitoramento, manutenção, rastreabilidade e qualidade.'}
+              {classification === 'Moderado' && 'Sua CME necessita de melhorias em diversas áreas. Recomendamos um plano de ação prioritário com foco em economia e segurança.'}
+              {classification === 'Atenção' && 'Sua CME apresenta deficiências significativas que necessitam de atenção imediata. Riscos financeiros e operacionais identificados.'}
+              {classification === 'Crítico' && 'Sua CME apresenta deficiências críticas que exigem intervenção urgente. Recomendamos suporte especializado imediato.'}
             </p>
           </CardContent>
         </Card>

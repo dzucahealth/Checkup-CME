@@ -1959,9 +1959,9 @@ export function calculateResult(answers: Record<string, number>): CheckupResult 
   const overallScore = Math.round((totalScore / totalMaxScore) * 100);
 
   let overallLevel: 'critico' | 'necessita_melhorias' | 'precisa_tecnologia' | 'em_desenvolvimento';
-  if (overallScore < 40) overallLevel = 'critico';
-  else if (overallScore < 55) overallLevel = 'necessita_melhorias';
-  else if (overallScore < 75) overallLevel = 'precisa_tecnologia';
+  if (overallScore < 30) overallLevel = 'critico';
+  else if (overallScore < 50) overallLevel = 'necessita_melhorias';
+  else if (overallScore < 70) overallLevel = 'precisa_tecnologia';
   else overallLevel = 'em_desenvolvimento';
 
   // Identificar principais problemas - SEMPRE mostrar que precisa melhorar
@@ -1991,15 +1991,19 @@ export function calculateResult(answers: Record<string, number>): CheckupResult 
     'Estabelecer dashboard de indicadores em tempo real com CME Inteligente',
   ];
 
-  // Estimativa de economia - SEMPRE mostrar oportunidade
+  // Estimativa de economia - SEMPRE mostrar oportunidade com faixas realistas
+  // Cenários: 52% de não utilização em alguns casos, desperdício mensal relevante
+  // Custo regulatório anual (qualificação/calibração de ultrassônica, secadora, termodesinfetadora, autoclave, incubadora, seladora) deve compor o custo fixo mensal
   const economyEstimate = {
-    min: overallScore < 55 ? 20 : overallScore < 75 ? 12 : 8,
-    max: overallScore < 55 ? 35 : overallScore < 75 ? 22 : 15,
-    description: overallScore < 55 
-      ? 'Redução SIGNIFICATIVA de custos com CME Inteligente: otimização de processos, redução de reprocessamentos e controle total de insumos'
-      : overallScore < 75
-      ? 'Economia substancial com CME Inteligente: refinamento de processos e gestão de recursos orientada por dados'
-      : 'Otimização contínua com CME Inteligente para máxima eficiência e economia',
+    min: overallScore < 30 ? 25 : overallScore < 50 ? 15 : overallScore < 70 ? 10 : 6,
+    max: overallScore < 30 ? 45 : overallScore < 50 ? 30 : overallScore < 70 ? 20 : 12,
+    description: overallScore < 30 
+      ? 'Redução SIGNIFICATIVA de custos: cenários com até 52% de não utilização e desperdício mensal relevante. Embalagens em tecido de algodão podem não ser mais econômicas que papel grau cirúrgico quando se considera reprocessamento, água, mão de obra e tempo. Custos regulatórios anuais (qualificação/calibração) devem ser rateados mensalmente.'
+      : overallScore < 50
+      ? 'Economia substancial: até 52% de não utilização em cenários específicos e desperdício mensal relevante identificado. Embalagens de tecido de algodão versus papel grau cirúrgico merecem análise detalhada de custo total (reprocessamento, água, mão de obra, tempo).'
+      : overallScore < 70
+      ? 'Otimização contínua: embora a operação esteja estruturada, cenários de até 52% de não utilização em alguns processos ainda podem existir. Custo regulatório anual de equipamentos deve ser rateado e monitorado mensalmente.'
+      : 'Excelência com oportunidades: mesmo operações avançadas possuem oportunidades de economia. Custo baixo nem sempre significa eficiência — pode indicar subinvestimento em monitoramento, manutenção, rastreabilidade e qualidade, aumentando o risco sanitário, operacional e jurídico.',
   };
 
   // Calcular risco financeiro baseado nas respostas da categoria financeiro
@@ -2011,29 +2015,29 @@ export function calculateResult(answers: Record<string, number>): CheckupResult 
   };
 
   if (financialCategory) {
-    if (financialCategory.percentage >= 75) {
-      financialRisk = {
-        riskLevel: 'Baixo',
-        estimatedLoss: 'Menos de R$ 20.000/ano',
-        description: 'Riscos financeiros controlados, manter ações preventivas.'
-      };
-    } else if (financialCategory.percentage >= 55) {
+    if (financialCategory.percentage >= 70) {
       financialRisk = {
         riskLevel: 'Moderado',
         estimatedLoss: 'R$ 20.000 a R$ 50.000/ano',
-        description: 'Oportunidades de economia identificadas com controle de processos.'
+        description: 'Mesmo com controles parcialmente estruturados, existem oportunidades de economia. Custo baixo pode indicar subinvestimento em monitoramento, manutenção e rastreabilidade, aumentando riscos. Custo regulatório anual de equipamentos deve ser rateado e monitorado mensalmente.'
       };
-    } else if (financialCategory.percentage >= 40) {
+    } else if (financialCategory.percentage >= 50) {
       financialRisk = {
         riskLevel: 'Elevado',
         estimatedLoss: 'R$ 50.000 a R$ 100.000/ano',
-        description: 'Riscos financeiros relevantes que demandam ações corretivas urgentes.'
+        description: 'Riscos financeiros relevantes com até 52% de não utilização em cenários específicos. Desperdício mensal identificado. Custos regulatórios (qualificação/calibração de ultrassônica, secadora, termodesinfetadora, autoclave, incubadora, seladora) devem compor o custo fixo mensal.'
+      };
+    } else if (financialCategory.percentage >= 30) {
+      financialRisk = {
+        riskLevel: 'Crítico',
+        estimatedLoss: 'R$ 100.000 a R$ 300.000/ano',
+        description: 'EXPOSIÇÃO FINANCEIRA GRAVE: processos jurídicos, multas regulatórias, desperdícios e ineficiências. Embalagens em tecido de algodão vs papel grau cirúrgico merecem análise imediata de custo total.'
       };
     } else {
       financialRisk = {
         riskLevel: 'Crítico',
-        estimatedLoss: 'R$ 100.000 a R$ 500.000+/ano',
-        description: 'EXPOSIÇÃO FINANCEIRA GRAVE: processos jurídicos, multas, desperdícios e ineficiências podem gerar prejuízos elevados.'
+        estimatedLoss: 'Acima de R$ 300.000/ano',
+        description: 'EXPOSIÇÃO FINANCEIRA CRÍTICA: riscos jurídicos, sanitários e operacionais extremos. Custo baixo não significa eficiência — pode indicar subinvestimento grave em qualidade e segurança.'
       };
     }
   }
