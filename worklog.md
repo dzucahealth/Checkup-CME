@@ -61,3 +61,28 @@ Built a comprehensive, production-ready single-page application for assessing Ce
 - `bun run lint` ✅ No errors
 - Dev server compiles and serves at localhost:3000 ✅
 - `bun run db:push` ✅ Schema synced to SQLite
+
+---
+Task ID: 1
+Agent: Super Z (Main)
+Task: Adicionar campos pessoais ao cadastro (Nome, Cargo, Telefone/WhatsApp, Email)
+
+Work Log:
+- Analisou a estrutura existente do projeto CEHKUP (Checkup CME Inteligente)
+- Atualizou `src/lib/types.ts`: adicionou campos `name`, `phone`, `email` ao `RegistrationData`
+- Atualizou `prisma/schema.prisma`: adicionou campos `name`, `phone`, `email` ao modelo `Assessment`
+- Atualizou `RegisterScreen1` no `page.tsx`: adicionou campos Nome, Cargo, Telefone (WhatsApp), Email + Tipo de Estabelecimento
+- Validacão de todos os campos obrigatórios
+- Atualizou o step label de "Dados Profissionais" para "Dados Pessoais" em todos os indicadores de progresso
+- Atualizou o relatório de resultados (download) com seção "DADOS DO AVALIADOR"
+- Atualizou o cabeçalho de resultados para exibir nome e cargo
+- Atualizou texto de consentimento LGPD para mencionar novos dados coletados
+- Atualizou estado inicial e reset para incluir novos campos
+- Executou `prisma db push` com sucesso
+- Build passou sem erros
+
+Stage Summary:
+- Formulário de cadastro (Etapa 1) agora coleta: Nome, Cargo, Telefone/WhatsApp, Email e Tipo de Estabelecimento
+- Sem campo de nome do hospital (conforme solicitado)
+- Relatório de resultados inclui dados pessoais do avaliador
+- Build: ✅ Prisma synced, Next.js compiled successfully

@@ -9,7 +9,10 @@ datasource db {
 
 model Assessment {
   id                  String   @id @default(cuid())
+  name                String
   position            String
+  phone               String
+  email               String
   establishmentType   String
   bedCount            String
   cmeProfessionals    String

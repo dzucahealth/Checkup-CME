@@ -230,7 +230,10 @@ function RegisterScreen1({ data, onChange, onNext, onBack }: {
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
+    if (!data.name.trim()) newErrors.name = 'Nome é obrigatório';
     if (!data.position.trim()) newErrors.position = 'Cargo é obrigatório';
+    if (!data.phone.trim()) newErrors.phone = 'Telefone/WhatsApp é obrigatório';
+    if (!data.email.trim()) newErrors.email = 'Email é obrigatório';
     if (!data.establishmentType) newErrors.establishmentType = 'Selecione o tipo de estabelecimento';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -247,7 +250,7 @@ function RegisterScreen1({ data, onChange, onNext, onBack }: {
         <div className="flex items-center justify-center gap-2 mb-8">
           <div className="flex items-center gap-1 text-sm font-medium text-primary">
             <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">1</span>
-            <span className="ml-1">Dados Profissionais</span>
+            <span className="ml-1">Dados Pessoais</span>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -271,12 +274,25 @@ function RegisterScreen1({ data, onChange, onNext, onBack }: {
             <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
               <User className="w-6 h-6 text-primary" />
             </div>
-            <CardTitle className="text-2xl">Dados Profissionais</CardTitle>
+            <CardTitle className="text-2xl">Dados Pessoais</CardTitle>
             <CardDescription>
-              Informe seus dados e o tipo de estabelecimento para personalizar o checkup
+              Informe seus dados pessoais e o tipo de estabelecimento para personalizar o checkup
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Name */}
+            <div className="space-y-2">
+              <Label htmlFor="name">Nome</Label>
+              <Input
+                id="name"
+                placeholder="Seu nome completo"
+                value={data.name}
+                onChange={(e) => onChange({ ...data, name: e.target.value })}
+                className={errors.name ? 'border-destructive' : ''}
+              />
+              {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+            </div>
+
             {/* Position */}
             <div className="space-y-2">
               <Label htmlFor="position">Cargo</Label>
@@ -288,6 +304,36 @@ function RegisterScreen1({ data, onChange, onNext, onBack }: {
                 className={errors.position ? 'border-destructive' : ''}
               />
               {errors.position && <p className="text-xs text-destructive">{errors.position}</p>}
+            </div>
+
+            {/* Phone/WhatsApp */}
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-600"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                Telefone (WhatsApp)
+              </Label>
+              <Input
+                id="phone"
+                placeholder="(00) 00000-0000"
+                value={data.phone}
+                onChange={(e) => onChange({ ...data, phone: e.target.value })}
+                className={errors.phone ? 'border-destructive' : ''}
+              />
+              {errors.phone && <p className="text-xs text-destructive">{errors.phone}</p>}
+            </div>
+
+            {/* Email */}
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="seuemail@exemplo.com"
+                value={data.email}
+                onChange={(e) => onChange({ ...data, email: e.target.value })}
+                className={errors.email ? 'border-destructive' : ''}
+              />
+              {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
             </div>
 
             {/* Establishment Type */}
@@ -369,7 +415,7 @@ function RegisterScreen2({ data, onChange, onNext, onBack }: {
         <div className="flex items-center justify-center gap-2 mb-8">
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <CheckCircle2 className="w-4 h-4 text-primary" />
-            <span>Dados Profissionais</span>
+            <span>Dados Pessoais</span>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
           <div className="flex items-center gap-1 text-sm font-medium text-primary">
@@ -538,7 +584,7 @@ function ConsentScreen({ consent1, consent2, onConsentChange, onStart, onBack }:
         <div className="flex items-center justify-center gap-2 mb-8">
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <CheckCircle2 className="w-4 h-4 text-primary" />
-            <span>Dados Profissionais</span>
+            <span>Dados Pessoais</span>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -577,8 +623,8 @@ function ConsentScreen({ consent1, consent2, onConsentChange, onStart, onBack }:
               <Separator />
               <p>
                 Ao realizar este checkup, você consente com a coleta e o tratamento dos dados
-                informados, incluindo cargo, tipo de estabelecimento, dados operacionais e as respostas
-                fornecidas no questionário de avaliação.
+                informados, incluindo nome, cargo, telefone, email, tipo de estabelecimento,
+                dados operacionais e as respostas fornecidas no questionário de avaliação.
               </p>
               <p>
                 <strong className="text-foreground">Finalidade:</strong> Os dados coletados serão utilizados
@@ -914,10 +960,18 @@ Data: ${new Date().toLocaleDateString('pt-BR')}
 Avaliador: Klever Oliveira Lopes
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DADOS DO AVALIADOR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Nome: ${registrationData.name}
+Cargo: ${registrationData.position}
+Telefone: ${registrationData.phone}
+Email: ${registrationData.email}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 DADOS DA INSTITUIÇÃO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Cargo: ${registrationData.position}
 Tipo: ${ESTABLISHMENT_TYPES.find(t => t.id === registrationData.establishmentType)?.label || registrationData.establishmentType}
 Leitos: ${BED_COUNT_OPTIONS.find(b => b.id === registrationData.bedCount)?.label || registrationData.bedCount}
 Profissionais CME: ${CME_PROFESSIONALS_OPTIONS.find(p => p.id === registrationData.cmeProfessionals)?.label || registrationData.cmeProfessionals}
@@ -969,6 +1023,10 @@ Não substitui auditorias regulatórias oficiais.
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">Resultado do Checkup</h1>
           <p className="text-white/80">
+            {registrationData.name}
+            {registrationData.position && <span> — {registrationData.position}</span>}
+          </p>
+          <p className="text-white/60 text-sm mt-1">
             {ESTABLISHMENT_TYPES.find(t => t.id === registrationData.establishmentType)?.label}
             {registrationData.region && registrationData.state && (
               <> — {REGIONS.find(r => r.id === registrationData.region)?.label} — {
@@ -1108,14 +1166,7 @@ Não substitui auditorias regulatórias oficiais.
 // ============================
 export default function Home() {
   const [screen, setScreen] = useState<ScreenType>('intro');
-  const [registrationData, setRegistrationData] = useState<RegistrationData>({
-    position: '',
-    establishmentType: '',
-    bedCount: '',
-    cmeProfessionals: '',
-    region: '',
-    state: '',
-  });
+  const [registrationData, setRegistrationData] = useState<RegistrationData>({ name: '', position: '', phone: '', email: '', establishmentType: '', bedCount: '', cmeProfessionals: '', region: '', state: '' });
   const [consent1, setConsent1] = useState(false);
   const [consent2, setConsent2] = useState(false);
   const [responses, setResponses] = useState<Map<number, number>>(new Map());
@@ -1188,7 +1239,7 @@ export default function Home() {
 
   const handleRestart = () => {
     setScreen('intro');
-    setRegistrationData({ position: '', establishmentType: '', bedCount: '', cmeProfessionals: '', region: '', state: '' });
+    setRegistrationData({ name: '', position: '', phone: '', email: '', establishmentType: '', bedCount: '', cmeProfessionals: '', region: '', state: '' });
     setConsent1(false);
     setConsent2(false);
     setResponses(new Map());

@@ -24,7 +24,10 @@ export interface Question {
 export type ScreenType = 'intro' | 'register1' | 'register2' | 'consent' | 'assessment' | 'results';
 
 export interface RegistrationData {
+  name: string;
   position: string;
+  phone: string;
+  email: string;
   establishmentType: string;
   bedCount: string;
   cmeProfessionals: string;
