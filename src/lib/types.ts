@@ -61,7 +61,7 @@ export interface AssessmentResult {
 
 export const CATEGORIES: CategoryInfo[] = [
   { key: 'gestao', label: 'Gestão', icon: '👔', questionCount: 11, color: '#0D9488' },
-  { key: 'processo', label: 'Processo', icon: '⚙️', questionCount: 17, color: '#059669' },
+  { key: 'processo', label: 'Processo', icon: '⚙️', questionCount: 18, color: '#059669' },
   { key: 'tecnologia', label: 'Tecnologia', icon: '💻', questionCount: 14, color: '#0891B2' },
   { key: 'financeiro', label: 'Financeiro e Riscos', icon: '💰', questionCount: 10, color: '#D97706' },
 ];

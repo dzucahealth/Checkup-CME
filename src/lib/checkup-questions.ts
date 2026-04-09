@@ -1585,6 +1585,40 @@ export const checkupQuestions: Question[] = [
     ],
     weight: 2,
   },
+  {
+    id: 'processo_18',
+    category: 'processo',
+    question: 'Quais tipos de embalagens sua CME utiliza para esterilização?',
+    description: 'A diversidade de embalagens permite atender diferentes tipos de instrumentais e tecnologias de esterilização.',
+    options: [
+      {
+        value: 1,
+        label: 'Apenas papel crepado e/ou tecido de algodão',
+        impact: 'Embalagens básicas, menor barreira microbiológica, dependência de lavagem/reutilização'
+      },
+      {
+        value: 2,
+        label: 'Papel grau cirúrgico e SMS, além de papel crepado/algodão',
+        impact: 'Boa cobertura para instrumental comum, barreira microbiológica adequada'
+      },
+      {
+        value: 3,
+        label: 'Papel grau cirúrgico, SMS, Tyvek e papel crepado/algodão',
+        impact: 'Ampla variedade de embalagens, atende materiais comuns e termossensíveis'
+      },
+      {
+        value: 4,
+        label: 'Todas as opções (papel grau cirúrgico, SMS, Tyvek, tecido de algodão, papel crepado e containers)',
+        impact: 'Embalagem completa e versátil, cobertura total para todos os tipos de materiais e processos'
+      },
+      {
+        value: 0,
+        label: 'Não possuo esta informação',
+        impact: 'FALTA DE VISIBILIDADE: desconhecer os tipos de embalagem é um risco de qualidade'
+      },
+    ],
+    weight: 2,
+  },
 
   // ==================== NOVAS PERGUNTAS - TECNOLOGIA ====================
   {
