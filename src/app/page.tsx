@@ -102,7 +102,7 @@ function IntroScreen({ onStart }: { onStart: () => void }) {
             <span className="block text-teal-600">Inteligente</span>
           </h1>
           <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Descubra o ranking da sua CME e receba um laudo personalizado com recomendações
+            Descubra o ranking da sua CME e receba um diagnóstico personalizado com recomendações
           </p>
         </div>
       </section>
@@ -115,7 +115,7 @@ function IntroScreen({ onStart }: { onStart: () => void }) {
               <div className="w-14 h-14 rounded-full bg-sky-50 flex items-center justify-center">
                 <FileText className="w-7 h-7 text-sky-500" />
               </div>
-              <h3 className="font-semibold text-lg text-gray-900">Laudo Personalizado</h3>
+              <h3 className="font-semibold text-lg text-gray-900">Diagnóstico Personalizado</h3>
               <p className="text-sm text-gray-500">
                 Receba um diagnóstico completo com pontos críticos e recomendações específicas para sua CME.
               </p>
