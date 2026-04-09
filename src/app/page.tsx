@@ -687,14 +687,35 @@ function ConsentScreen({ consent1, consent2, onConsentChange, onStart, onBack }:
             </div>
 
             {/* Warning */}
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3">
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 flex gap-3">
               <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-              <p className="text-sm text-amber-800 leading-relaxed">
-                <strong>Aviso Importante:</strong> Este checkup tem caráter exclusivamente diagnóstico e
-                orientativo. Não substitui auditorias regulatórias oficiais, laudos técnicos
-                certificados ou processos de acreditação. As recomendações geradas devem ser
-                avaliadas por profissionais especializados antes da implementação.
-              </p>
+              <div className="text-sm text-amber-800 leading-relaxed space-y-3">
+                <p className="font-bold text-base text-amber-900">
+                  Aviso sobre o caráter do check-up
+                </p>
+                <p className="font-semibold text-amber-900">
+                  Importante sobre a natureza deste check-up
+                </p>
+                <p>
+                  O CHECK UP CME INTELIGENTE possui caráter educacional, orientativo e de diagnóstico de gestão.
+                </p>
+                <p>
+                  Seu objetivo é apoiar a reflexão sobre processos, rotinas, controles e nível de maturidade operacional da CME, oferecendo uma visão inicial sobre pontos de atenção e oportunidades de melhoria.
+                </p>
+                <p className="font-semibold">Este material não substitui:</p>
+                <ul className="list-disc list-inside space-y-1 ml-1">
+                  <li>avaliação técnica presencial;</li>
+                  <li>assessoria especializada;</li>
+                  <li>responsabilidade do gestor e da instituição;</li>
+                  <li>exigências legais e sanitárias aplicáveis;</li>
+                  <li>normas técnicas vigentes;</li>
+                  <li>orientações de autoridades regulatórias;</li>
+                  <li>determinações previstas em RDCs e demais legislações brasileiras aplicáveis.</li>
+                </ul>
+                <p>
+                  Os resultados apresentados devem ser interpretados como instrumento de apoio à gestão, e não como laudo, parecer conclusivo ou validação formal de conformidade regulatória.
+                </p>
+              </div>
             </div>
 
             <div className="flex gap-3">
