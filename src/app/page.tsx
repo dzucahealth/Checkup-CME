@@ -645,10 +645,7 @@ function ConsentScreen({ consent1, consent2, onConsentChange, onStart, onBack }:
                 <strong className="text-foreground">Compartilhamento:</strong> Ao realizar este checkup, você consente com a coleta e o tratamento dos dados informados, incluindo nome, cargo, telefone, email, tipo de estabelecimento, dados operacionais e as respostas fornecidas no questionário de avaliação. Os dados não serão compartilhados com terceiros sem o seu consentimento expresso, exceto quando necessário para o cumprimento de obrigação legal ou regulatória.
               </p>
               <p>
-                <strong className="text-foreground">Retenção:</strong> Os dados serão mantidos pelo período necessário para cumprir as finalidades descritas, ou até que o titular solicite a exclusão, conforme previsto na LGPD.
-              </p>
-              <p>
-                <strong className="text-foreground">Direitos do Titular:</strong> Você pode acessar, corrigir, anonimizar, portabilizar, eliminar ou revogar o consentimento a qualquer momento, entrando em contato com o Encarregado de Proteção de Dados.
+                <strong className="text-foreground">Retenção:</strong> Os dados serão mantidos pelo período necessário para cumprir as finalidades descritas, ou até que o titular solicite a exclusão pelo e-mail (contato@cmeinteligente.com.br), conforme previsto na LGPD.
               </p>
               <p>
                 <strong className="text-foreground">Segurança:</strong> Adotamos medidas técnicas e organizacionais adequadas para proteger seus dados pessoais contra acesso não autorizado, perda, alteração ou destruição.
