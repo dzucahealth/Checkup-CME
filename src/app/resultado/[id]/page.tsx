@@ -396,7 +396,7 @@ Não substitui auditorias regulatórias oficiais.
                 <p className="text-white text-sm font-semibold">Klever Oliveira Lopes</p>
                 <p className="text-white/70 text-xs">Especialista em CME</p>
               </div>
-              <img src="/klever-lopes.png" alt="Klever Oliveira Lopes" className="w-12 h-12 rounded-full border-2 border-white/30 object-cover shadow-md" />
+              <img src="/klever-lopes-2.jpg" alt="Klever Oliveira Lopes" className="w-12 h-12 rounded-full border-2 border-white/30 object-cover shadow-md" />
             </div>
           </div>
           <CardContent className="pt-6 pb-6">
@@ -404,7 +404,7 @@ Não substitui auditorias regulatórias oficiais.
               {/* Foto grande do Klever */}
               <div className="shrink-0 flex flex-col items-center gap-2">
                 <img
-                  src="/klever-lopes.png"
+                  src="/klever-lopes-2.jpg"
                   alt="Klever Oliveira Lopes"
                   className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-teal-100 object-cover shadow-lg"
                 />
