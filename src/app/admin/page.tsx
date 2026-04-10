@@ -622,10 +622,13 @@ function DetailView({ assessment, onBack }: {
     setSaving(false);
   };
 
+  const [releaseError, setReleaseError] = useState('');
+
   const handleRelease = async () => {
     setReleaseLoading(true);
+    setReleaseError('');
     try {
-      await fetch(`/api/assessment/${assessment.id}`, {
+      const res = await fetch(`/api/assessment/${assessment.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -638,9 +641,20 @@ function DetailView({ assessment, onBack }: {
           visibleSections,
         }),
       });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        setReleaseError(errData.error || 'Erro ao liberar resultado');
+        setReleaseLoading(false);
+        return;
+      }
+
+      // Small delay to ensure DB is updated before refresh
+      await new Promise(r => setTimeout(r, 500));
       onBack(); // Refresh
     } catch (err) {
       console.error(err);
+      setReleaseError('Erro de conexão ao liberar resultado');
     }
     setReleaseLoading(false);
   };
@@ -1267,6 +1281,9 @@ function DetailView({ assessment, onBack }: {
                       {releaseLoading ? 'Liberando...' : 'LIBERAR RESULTADO'}
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
+                    {releaseError && (
+                      <p className="text-xs text-red-600 text-center mt-2 font-medium">{releaseError}</p>
+                    )}
                     <p className="text-xs text-muted-foreground text-center">
                       Ao liberar, um link único será gerado para o usuário acessar o resultado.
                     </p>
@@ -1288,6 +1305,7 @@ export default function AdminPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [assessments, setAssessments] = useState<AssessmentRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const fetchAssessments = useCallback(async () => {
@@ -1322,10 +1340,10 @@ export default function AdminPage() {
     return <LoginScreen onLogin={() => setIsLoggedIn(true)} />;
   }
 
-  if (loading) {
+  if (loading || refreshing) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-muted-foreground">Carregando...</p>
+        <p className="text-muted-foreground">{refreshing ? 'Atualizando...' : 'Carregando...'}</p>
       </div>
     );
   }
@@ -1339,7 +1357,12 @@ export default function AdminPage() {
     return (
       <DetailView
         assessment={assessment}
-        onBack={async () => { setSelectedId(null); await fetchAssessments(); }}
+        onBack={async () => {
+          setRefreshing(true);
+          await fetchAssessments();
+          setSelectedId(null);
+          setRefreshing(false);
+        }}
       />
     );
   }
