@@ -736,6 +736,85 @@ function ConsentScreen({ consent1, consent2, onConsentChange, onStart, onBack }:
 }
 
 // ============================
+// Screen 5: Thank You
+// ============================
+function ThankYouScreen() {
+  return (
+    <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center px-4 py-10">
+      <div className="w-full max-w-2xl">
+        <Card className="border-0 shadow-lg">
+          <CardHeader className="text-center">
+            <div className="mx-auto w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center mb-4">
+              <CheckCircle2 className="w-8 h-8 text-teal-600" />
+            </div>
+            <CardTitle className="text-2xl sm:text-3xl">Obrigado por completar o Checkup CME Inteligente!</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <p className="text-center text-muted-foreground leading-relaxed">
+              Suas respostas foram registradas com sucesso. Nosso time está preparando seu diagnóstico personalizado com base nas informações fornecidas.
+            </p>
+
+            <div className="bg-teal-50 border border-teal-200 rounded-xl p-5 space-y-3">
+              <p className="font-semibold text-teal-900 text-center">
+                O que acontece agora?
+              </p>
+              <ul className="space-y-2 text-sm text-teal-800">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" />
+                  <span>Seus dados serão analisados com atenção</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" />
+                  <span>O resultado será revisado por nosso especialista</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" />
+                  <span>Você receberá o link para acessar seu diagnóstico</span>
+                </li>
+              </ul>
+            </div>
+
+            <Separator />
+
+            <div className="space-y-3">
+              <p className="font-semibold text-gray-900 text-center">
+                Se essa jornada foi proveitosa e você deseja iniciar um processo de assessoria e tecnologia para sua CME, entre em contato:
+              </p>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div className="flex items-center gap-3 p-3 rounded-xl border border-gray-200 bg-gray-50">
+                  <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-teal-600"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Email</p>
+                    <p className="text-sm font-semibold text-gray-900">CMEINTELIGENTE@GMAIL.COM</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-3 rounded-xl border border-gray-200 bg-gray-50">
+                  <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-600"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">WhatsApp</p>
+                    <p className="text-sm font-semibold text-gray-900">(11) 9.99661-0399</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <Separator />
+
+            <p className="text-xs text-center text-muted-foreground leading-relaxed">
+              Material exclusivo e de propriedade da CME INTELIGENTE. Metodologia, lógica de dados, estrutura técnica e perguntas desenvolvidas por Klever Oliveira Lopes. Proibida a reprodução total ou parcial, replicação, adaptação, distribuição ou utilização sem autorização expressa.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+// ============================
 // Screen 4: Assessment
 // ============================
 function AssessmentScreen({ responses, onAnswer, onFinish }: {
@@ -1315,9 +1394,35 @@ export default function Home() {
     });
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     calculateResults();
-    setScreen('results');
+    // Save to DB and show thank you
+    try {
+      const responsesObj: Record<string, number> = {};
+      responses.forEach((val, key) => { responsesObj[key] = val; });
+
+      const currentResult = {
+        totalScore: result?.totalScore ?? 0,
+        totalPercentage: result?.totalPercentage ?? 0,
+        classification: result?.classification,
+        categoryScores: result?.categoryScores ?? [],
+        responses: result?.responses ?? [],
+        visibilityGaps: result?.visibilityGaps ?? [],
+      };
+
+      await fetch('/api/assessment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          registrationData,
+          responses: responsesObj,
+          result: currentResult,
+        }),
+      });
+    } catch (err) {
+      console.error('Error saving assessment:', err);
+    }
+    setScreen('thankyou');
   };
 
   const handleRestart = () => {
@@ -1368,14 +1473,8 @@ export default function Home() {
           onFinish={handleFinish}
         />
       );
-    case 'results':
-      return result ? (
-        <ResultsScreen
-          result={result}
-          registrationData={registrationData}
-          onRestart={handleRestart}
-        />
-      ) : null;
+    case 'thankyou':
+      return <ThankYouScreen />;
     default:
       return <IntroScreen onStart={handleStart} />;
   }

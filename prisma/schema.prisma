@@ -8,23 +8,31 @@ datasource db {
 }
 
 model Assessment {
-  id                  String   @id @default(cuid())
-  name                String
-  position            String
-  phone               String
-  email               String
-  establishmentType   String
-  bedCount            String
-  cmeProfessionals    String
-  region              String
-  state               String
-  consentGiven        Boolean
-  totalScore          Float
-  managementScore     Float?
-  processScore        Float?
-  technologyScore     Float?
-  financialScore      Float?
-  lgpdScore           Float?
-  createdAt           DateTime @default(now())
-  responses           String
+  id                    String    @id @default(cuid())
+  name                  String
+  position              String
+  phone                 String
+  email                 String
+  establishmentType     String
+  bedCount              String
+  cmeProfessionals      String
+  region                String
+  state                 String
+  consentGiven          Boolean
+  totalScore            Float
+  managementScore       Float?
+  processScore          Float?
+  technologyScore       Float?
+  financialScore        Float?
+  lgpdScore             Float?
+  createdAt             DateTime  @default(now())
+  responses             String
+  status                String    @default("pending")
+  adminObservation      String?
+  economyMinEdited      Float?
+  economyMaxEdited      Float?
+  financialRiskLevelEdited  String?
+  financialLossEdited   String?
+  releasedAt            DateTime?
+  resultJson            String?
 }
