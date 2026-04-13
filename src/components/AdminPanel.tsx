@@ -26,6 +26,7 @@ import {
   CategoryKey,
 } from '@/lib/types';
 import { checkupQuestions } from '@/lib/checkup-questions';
+import { getZipFile } from '@/app/actions';
 
 interface AssessmentRow {
   id: string;
@@ -230,9 +231,19 @@ function Dashboard({ assessments, onViewDetail, onLogout }: {
   const handleDownloadZip = async () => {
     setDownloading(true);
     try {
-      const res = await fetch('/api/download?file=checkupcme.zip');
-      if (!res.ok) throw new Error();
-      const blob = await res.blob();
+      const result = await getZipFile();
+      if (!result.success) {
+        alert('Erro: ' + result.error);
+        setDownloading(false);
+        return;
+      }
+      // Convert base64 to blob
+      const binaryString = atob(result.data);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      const blob = new Blob([bytes], { type: 'application/zip' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -241,8 +252,9 @@ function Dashboard({ assessments, onViewDetail, onLogout }: {
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-    } catch {
+    } catch (err) {
       alert('Erro ao gerar download. Tente novamente.');
+      console.error(err);
     }
     setDownloading(false);
   };
