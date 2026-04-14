@@ -1408,23 +1408,62 @@ export default function Home() {
   };
 
   const handleFinish = async () => {
-    calculateResults();
+    // Calculate results locally for immediate use
+    const visibilityGaps: string[] = [];
+    const categoryScores: CategoryScore[] = CATEGORIES.map((cat) => {
+      const catQuestions = checkupQuestions.filter(q => q.category === cat.key);
+      let score = 0;
+      let maxScore = 0;
+      catQuestions.forEach(q => {
+        const answer = responses.get(q.id);
+        if (answer !== undefined && answer > 0) {
+          score += answer * q.weight;
+          maxScore += 4 * q.weight;
+        }
+        if (answer === 0) {
+          const opt = q.options.find(o => o.value === 0);
+          if (opt && opt.impact.startsWith('FALTA DE VISIBILIDADE')) {
+            visibilityGaps.push(q.question);
+          }
+        }
+      });
+      return {
+        category: cat.key,
+        label: cat.label,
+        score,
+        maxScore,
+        percentage: maxScore > 0 ? (score / maxScore) * 100 : 0,
+      };
+    });
+
+    const totalScore = categoryScores.reduce((sum, cs) => sum + cs.score, 0);
+    const totalMax = categoryScores.reduce((sum, cs) => sum + cs.maxScore, 0);
+    const totalPercentage = totalMax > 0 ? (totalScore / totalMax) * 100 : 0;
+    const classification = getClassification(totalPercentage);
+    const responseArray: AssessmentResponse[] = Array.from(responses.entries()).map(([questionId, answer]) => ({
+      questionId,
+      answer,
+    }));
+
+    const currentResult: AssessmentResult = {
+      totalScore,
+      totalPercentage,
+      classification,
+      categoryScores,
+      responses: responseArray,
+      visibilityGaps,
+    };
+
+    // Update state as well
+    setResult(currentResult);
+
     // Save to DB and show thank you
     try {
       const responsesObj: Record<string, number> = {};
       responses.forEach((val, key) => { responsesObj[key] = val; });
 
-      const currentResult = {
-        totalScore: result?.totalScore ?? 0,
-        totalPercentage: result?.totalPercentage ?? 0,
-        classification: result?.classification,
-        categoryScores: result?.categoryScores ?? [],
-        responses: result?.responses ?? [],
-        visibilityGaps: result?.visibilityGaps ?? [],
-      };
-
       if (assessmentId) {
-        // Update existing assessment with responses and result
+        console.log('Updating assessment:', assessmentId);
         await fetch(`/api/assessment/${assessmentId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -1436,7 +1475,7 @@ export default function Home() {
           }),
         });
       } else {
-        // Fallback: create new assessment
+        console.log('Creating new assessment (fallback)');
         await fetch('/api/assessment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

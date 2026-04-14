@@ -10,7 +10,12 @@ export async function POST(request: NextRequest) {
       result,
     } = body;
 
+    console.log('--- POST /api/assessment ---');
+    console.log('Body partial:', body.partial);
+    console.log('Registration Data Name:', registrationData?.name);
+
     if (!registrationData || !responses || !result) {
+      console.warn('POST /api/assessment: Dados obrigatórios ausentes');
       return NextResponse.json(
         { error: 'Dados obrigatórios ausentes' },
         { status: 400 }
@@ -43,7 +48,7 @@ export async function POST(request: NextRequest) {
         region: registrationData.region,
         state: registrationData.state,
         consentGiven: true,
-        totalScore: result.totalPercentage ?? result.totalScore,
+        totalScore: result.totalPercentage ?? result.totalScore ?? 0,
         managementScore,
         processScore,
         technologyScore,
@@ -53,9 +58,10 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    console.log('Assessment created successfully with ID:', assessment.id);
     return NextResponse.json({ id: assessment.id }, { status: 201 });
   } catch (error) {
-    console.error('Error saving assessment:', error);
+    console.error('Error in POST /api/assessment:', error);
     return NextResponse.json(
       { error: 'Erro ao salvar avaliação' },
       { status: 500 }

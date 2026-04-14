@@ -64,6 +64,10 @@ export async function PUT(
       totalScore,
     } = body;
 
+    console.log(`--- PUT /api/assessment/${id} ---`);
+    console.log('Status received:', status);
+    console.log('Fields to update:', Object.keys(body));
+
     const assessment = await db.assessment.findUnique({ where: { id } });
     if (!assessment) {
       return NextResponse.json(
@@ -107,9 +111,10 @@ export async function PUT(
       data: updateData,
     });
 
+    console.log('Assessment updated successfully');
     return NextResponse.json(updated);
   } catch (error) {
-    console.error('Error updating assessment:', error);
+    console.error('Error in PUT /api/assessment:', error);
     return NextResponse.json(
       { error: 'Erro ao atualizar avaliação' },
       { status: 500 }
