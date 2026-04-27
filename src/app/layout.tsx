@@ -14,24 +14,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Z.ai Code Scaffold - AI-Powered Development",
-  description: "Modern Next.js scaffold optimized for AI-powered development with Z.ai. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
-  keywords: ["Z.ai", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "AI development", "React"],
-  authors: [{ name: "Z.ai Team" }],
+  title: "Checkup-CME - Diagnóstico e Avaliação para CME",
+  description: "Plataforma avançada de diagnóstico e avaliação para Centrais de Material e Esterilização (CME).",
+  keywords: ["Checkup-CME", "CME", "Diagnóstico", "Avaliação", "Gestão Hospitalar", "Saúde", "Conformidade"],
+  authors: [{ name: "Advansoftware" }],
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: "/logo.svg",
   },
   openGraph: {
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
-    url: "https://chat.z.ai",
-    siteName: "Z.ai",
+    title: "Checkup-CME",
+    description: "Plataforma avançada de diagnóstico e avaliação para Centrais de Material e Esterilização (CME).",
+    url: "/",
+    siteName: "Checkup-CME",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
+    title: "Checkup-CME",
+    description: "Plataforma avançada de diagnóstico e avaliação para Centrais de Material e Esterilização (CME).",
   },
 };
 
