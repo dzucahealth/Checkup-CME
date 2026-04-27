@@ -375,11 +375,11 @@ function RegisterScreen1({ data, onChange, onNext, onBack }: {
             </div>
 
             <div className="flex gap-3">
-              <Button onClick={onBack} variant="outline" size="lg" className="shrink-0">
+              <Button onClick={onBack} variant="outline" size="lg" className="flex-1">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Voltar
               </Button>
-              <Button onClick={handleNext} className="w-full" size="lg">
+              <Button onClick={handleNext} className="flex-[2]" size="lg">
                 Próximo
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
@@ -566,11 +566,11 @@ function RegisterScreen2({ data, onChange, onNext, onBack }: {
             )}
 
             <div className="flex gap-3">
-              <Button onClick={onBack} variant="outline" size="lg" className="shrink-0">
+              <Button onClick={onBack} variant="outline" size="lg" className="flex-1">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Voltar
               </Button>
-              <Button onClick={handleNext} className="w-full" size="lg">
+              <Button onClick={handleNext} className="flex-[2]" size="lg">
                 Próximo
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
@@ -712,13 +712,13 @@ function ConsentScreen({ consent1, consent2, onConsentChange, onStart, onBack }:
             </div>
 
             <div className="flex gap-3">
-              <Button onClick={onBack} variant="outline" size="lg" className="shrink-0">
+              <Button onClick={onBack} variant="outline" size="lg" className="flex-1">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Voltar
               </Button>
               <Button
                 onClick={onStart}
-                className="w-full"
+                className="flex-[2]"
                 size="lg"
                 disabled={!consent1 || !consent2}
               >

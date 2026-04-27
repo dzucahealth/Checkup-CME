@@ -26,13 +26,13 @@ model Assessment {
   financialScore        Float?
   lgpdScore             Float?
   createdAt             DateTime  @default(now())
-  responses             String
+  responses             String    @db.Text
   status                String    @default("pending")
-  adminObservation      String?
+  adminObservation      String?   @db.Text
   economyMinEdited      Float?
   economyMaxEdited      Float?
   financialRiskLevelEdited  String?
   financialLossEdited   String?
   releasedAt            DateTime?
-  resultJson            String?
+  resultJson            String?   @db.Text
 }

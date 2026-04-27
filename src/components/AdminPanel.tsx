@@ -699,7 +699,7 @@ function DetailView({ assessment, onBack }: {
   };
 
   const copyLink = async () => {
-    const link = `${window.location.origin}/#${assessment.id}`;
+    const link = `${window.location.origin}/resultado/${assessment.id}`;
     await navigator.clipboard.writeText(link);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

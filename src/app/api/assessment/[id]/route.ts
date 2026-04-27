@@ -86,7 +86,23 @@ export async function PUT(
     if (totalScore !== undefined) updateData.totalScore = totalScore;
 
     if (resultJson !== undefined) {
-      updateData.resultJson = typeof resultJson === 'string' ? resultJson : JSON.stringify(resultJson);
+      const resultStr = typeof resultJson === 'string' ? resultJson : JSON.stringify(resultJson);
+      updateData.resultJson = resultStr;
+
+      // Extrair scores por categoria do resultJson para os campos individuais
+      try {
+        const parsedResult = typeof resultJson === 'string' ? JSON.parse(resultJson) : resultJson;
+        if (parsedResult.categoryScores && Array.isArray(parsedResult.categoryScores)) {
+          const findScore = (cat: string) =>
+            parsedResult.categoryScores.find((c: { category: string }) => c.category === cat)?.percentage ?? null;
+          updateData.managementScore = findScore('gestao');
+          updateData.processScore = findScore('processo');
+          updateData.technologyScore = findScore('tecnologia');
+          updateData.financialScore = findScore('financeiro');
+        }
+      } catch {
+        console.warn('Não foi possível extrair categoryScores do resultJson');
+      }
     } else if (visibleSections !== undefined) {
       try {
         const existingJson = assessment.resultJson ? JSON.parse(assessment.resultJson as string) : {};
