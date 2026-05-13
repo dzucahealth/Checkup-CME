@@ -1,139 +1,182 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params;
-
-    if (!id) {
-      return NextResponse.json(
-        { error: 'ID não fornecido' },
-        { status: 400 }
-      );
-    }
-
-    const assessment = await db.assessment.findUnique({
-      where: { id },
-    });
-
-    if (!assessment) {
-      return NextResponse.json(
-        { error: 'Avaliação não encontrada' },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json(assessment);
-  } catch (error) {
-    console.error('Error fetching assessment:', error);
-    return NextResponse.json(
-      { error: 'Erro ao buscar avaliação' },
-      { status: 500 }
-    );
-  }
-}
+import { NextRequest, NextResponse } from 'next/server'
+import { db } from '@/lib/db'
+import { extractUserFromRequest } from '@/lib/auth/extractUser'
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
-
-    if (!id) {
+    const userPayload = extractUserFromRequest(request)
+    
+    if (!userPayload || userPayload.role !== 'admin') {
       return NextResponse.json(
-        { error: 'ID não fornecido' },
-        { status: 400 }
-      );
+        { error: 'Acesso restrito' },
+        { status: 403 }
+      )
     }
 
-    const body = await request.json();
-    const {
-      adminObservation,
-      economyMinEdited,
-      economyMaxEdited,
+    const { id } = await params
+    const body = await request.json()
+    const { status, adminObservation, economyMinEdited, economyMaxEdited, financialRiskLevelEdited, financialLossEdited, resultJson, visibleSections } = body
+
+    console.log('[PUT] Body recebido:', JSON.stringify({ 
+      status, 
+      adminObservation: adminObservation ? 'sim' : 'não',
+      economyMinEdited, 
+      economyMaxEdited, 
       financialRiskLevelEdited,
       financialLossEdited,
-      status,
-      visibleSections,
-      responses,
-      resultJson,
-      totalScore,
-    } = body;
+      hasVisibleSections: !!visibleSections,
+      visibleSections 
+    }))
 
-    console.log(`--- PUT /api/assessment/${id} ---`);
-    console.log('Status received:', status);
-    console.log('Fields to update:', Object.keys(body));
+    const existingAssessment = await db.assessment.findUnique({
+      where: { id },
+    })
 
-    const assessment = await db.assessment.findUnique({ where: { id } });
+    if (!existingAssessment) {
+      return NextResponse.json(
+        { error: 'Avaliação não encontrada' },
+        { status: 404 }
+      )
+    }
+
+    const updateData: Record<string, unknown> = {}
+
+    if (status) updateData.status = status
+    if (status === 'released') {
+      updateData.releasedAt = new Date()
+    }
+
+    await db.assessment.update({
+      where: { id },
+      data: updateData,
+    })
+
+    const existingResult = await db.assessmentResult.findUnique({
+      where: { assessmentId: id },
+    })
+    console.log('[PUT] existingResult:', existingResult ? JSON.stringify({ 
+      resultJson: existingResult.resultJson?.substring(0, 200),
+      economyMinEdited: existingResult.economyMinEdited,
+      economyMaxEdited: existingResult.economyMaxEdited,
+      financialRiskLevelEdited: existingResult.financialRiskLevelEdited 
+    }) : 'null')
+
+    let finalResultJson = null
+    console.log('[PUT] visibleSections antes do if:', visibleSections)
+    console.log('[PUT] existing resultJson:', existingResult?.resultJson ? 'sim' : 'não')
+    if (visibleSections) {
+      const existing = existingResult?.resultJson ? JSON.parse(existingResult.resultJson) : {}
+      console.log('[PUT] existing parseado keys:', Object.keys(existing))
+      finalResultJson = { ...existing, visibleSections }
+      console.log('[PUT] finalResultJson com visibleSections keys:', Object.keys(finalResultJson))
+    } else if (resultJson) {
+      finalResultJson = resultJson
+    } else if (existingResult?.resultJson) {
+      finalResultJson = JSON.parse(existingResult.resultJson)
+    }
+
+    console.log('[PUT] finalResultJson:', finalResultJson ? JSON.stringify(finalResultJson).substring(0, 300) : 'null')
+
+    if (existingResult) {
+      await db.assessmentResult.update({
+        where: { assessmentId: id },
+        data: {
+          adminObservation,
+          economyMinEdited,
+          economyMaxEdited,
+          financialRiskLevelEdited,
+          financialLossEdited,
+          resultJson: finalResultJson ? JSON.stringify(finalResultJson) : undefined,
+          ...(status === 'released' && { releasedAt: new Date() }),
+        },
+      })
+    } else if (adminObservation || resultJson || visibleSections) {
+      await db.assessmentResult.create({
+        data: {
+          assessmentId: id,
+          adminObservation,
+          economyMinEdited,
+          economyMaxEdited,
+          financialRiskLevelEdited,
+          financialLossEdited,
+          resultJson: finalResultJson ? JSON.stringify(finalResultJson) : null,
+          ...(status === 'released' && { releasedAt: new Date() }),
+        },
+      })
+    }
+
+    // Log final para confirmar salvamento
+    const updatedResult = await db.assessmentResult.findUnique({ where: { assessmentId: id } })
+    console.log('[PUT] Resultado após salvar:', updatedResult ? JSON.stringify({ 
+      resultJson: updatedResult.resultJson?.substring(0, 300),
+      economyMinEdited: updatedResult.economyMinEdited,
+      economyMaxEdited: updatedResult.economyMaxEdited,
+      financialRiskLevelEdited: updatedResult.financialRiskLevelEdited
+    }) : 'não encontrado')
+
+    return NextResponse.json({ message: 'Avaliação atualizada com sucesso' })
+  } catch (error) {
+    console.error('Error in PUT /api/assessment/[id]:', error)
+    return NextResponse.json(
+      { error: 'Erro ao atualizar avaliação' },
+      { status: 500 }
+    )
+  }
+}
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const userPayload = extractUserFromRequest(request)
+    const { id } = await params
+
+    const assessment = await db.assessment.findUnique({
+      where: { id },
+      include: {
+        user: {
+          select: { name: true, email: true },
+        },
+        scores: true,
+        responses: true,
+        result: true,
+      },
+    })
+
+    // Se avaliação não existe
     if (!assessment) {
       return NextResponse.json(
         { error: 'Avaliação não encontrada' },
         { status: 404 }
-      );
+      )
     }
 
-    const updateData: Record<string, unknown> = {};
-    if (adminObservation !== undefined) updateData.adminObservation = adminObservation;
-    if (economyMinEdited !== undefined) updateData.economyMinEdited = economyMinEdited;
-    if (economyMaxEdited !== undefined) updateData.economyMaxEdited = economyMaxEdited;
-    if (financialRiskLevelEdited !== undefined) updateData.financialRiskLevelEdited = financialRiskLevelEdited;
-    if (financialLossEdited !== undefined) updateData.financialLossEdited = financialLossEdited;
-    if (responses !== undefined) updateData.responses = responses;
-    if (totalScore !== undefined) updateData.totalScore = totalScore;
-
-    if (resultJson !== undefined) {
-      const resultStr = typeof resultJson === 'string' ? resultJson : JSON.stringify(resultJson);
-      updateData.resultJson = resultStr;
-
-      // Extrair scores por categoria do resultJson para os campos individuais
-      try {
-        const parsedResult = typeof resultJson === 'string' ? JSON.parse(resultJson) : resultJson;
-        if (parsedResult.categoryScores && Array.isArray(parsedResult.categoryScores)) {
-          const findScore = (cat: string) =>
-            parsedResult.categoryScores.find((c: { category: string }) => c.category === cat)?.percentage ?? null;
-          updateData.managementScore = findScore('gestao');
-          updateData.processScore = findScore('processo');
-          updateData.technologyScore = findScore('tecnologia');
-          updateData.financialScore = findScore('financeiro');
-        }
-      } catch {
-        console.warn('Não foi possível extrair categoryScores do resultJson');
-      }
-    } else if (visibleSections !== undefined) {
-      try {
-        const existingJson = assessment.resultJson ? JSON.parse(assessment.resultJson as string) : {};
-        existingJson.visibleSections = visibleSections;
-        updateData.resultJson = JSON.stringify(existingJson);
-      } catch {
-        updateData.resultJson = JSON.stringify({ visibleSections });
-      }
+    // Se avaliação não está liberada, precisa de autenticação
+    if (assessment.status !== 'released' && assessment.status !== 'sent' && !userPayload) {
+      return NextResponse.json(
+        { error: 'Resultado não disponível' },
+        { status: 403 }
+      )
     }
 
-    if (status === 'released') {
-      updateData.status = 'released';
-      updateData.releasedAt = new Date();
-    } else if (status === 'sent') {
-      updateData.status = 'sent';
-    } else if (status) {
-      updateData.status = status;
+    // Se tem token, verifica acesso
+    if (userPayload && userPayload.role !== 'admin' && assessment.userId !== userPayload.userId) {
+      return NextResponse.json(
+        { error: 'Acesso restrito' },
+        { status: 403 }
+      )
     }
 
-    const updated = await db.assessment.update({
-      where: { id },
-      data: updateData,
-    });
-
-    console.log('Assessment updated successfully');
-    return NextResponse.json(updated);
+    return NextResponse.json(assessment)
   } catch (error) {
-    console.error('Error in PUT /api/assessment:', error);
+    console.error('Error in GET /api/assessment/[id]:', error)
     return NextResponse.json(
-      { error: 'Erro ao atualizar avaliação' },
+      { error: 'Erro ao buscar avaliação' },
       { status: 500 }
-    );
+    )
   }
 }

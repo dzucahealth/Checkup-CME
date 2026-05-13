@@ -169,37 +169,78 @@ const FINANCIAL_LABELS: Record<string, string> = {
   financeiro_10: 'Desperdício de Insumos',
 };
 
-function ResultsView({ data }: { data: AssessmentData }) {
+function ResultsView({ data, id }: { data: AssessmentData; id: string }) {
   const classification = getClassification(data.totalScore);
   const classColor = getClassificationColor(classification);
   const classBg = getClassificationBg(classification);
 
-  // Parse visible sections from resultJson
-  const sections: Record<SectionKey, boolean> = useMemo(() => {
-    try {
-      if (data.resultJson) {
-        const parsed = JSON.parse(data.resultJson);
-        if (parsed.visibleSections) return { ...DEFAULT_SECTIONS, ...parsed.visibleSections };
-      }
-    } catch {}
-    return DEFAULT_SECTIONS;
-  }, [data.resultJson]);
+  // Helper para campos do result (novo schema)
+  const result = data.result || {};
+  const economyMin = result.economyMinEdited ?? result.economyMin ?? null;
+  const economyMax = result.economyMaxEdited ?? result.economyMax ?? null;
+  const riskLevel = result.financialRiskLevelEdited ?? result.financialRiskLevel ?? null;
+  const lossEdited = result.financialLossEdited ?? result.financialLoss ?? null;
+  const adminObs = result.adminObservation ?? '';
 
-  // Parse responses
+  // Parse visible sections from resultJson - mapeia do formato admin para formato resultado
+  const sections: Record<SectionKey, boolean> = useMemo(() => {
+    console.log('[Resultado] data.result:', data.result ? JSON.stringify({
+      resultJson: data.result.resultJson?.substring(0, 100)
+    }) : 'null')
+    try {
+      const resultJson = data.result?.resultJson;
+      if (resultJson) {
+        const parsed = JSON.parse(resultJson);
+        console.log('[Resultado] parsed keys:', Object.keys(parsed))
+        if (parsed.visibleSections) {
+          console.log('[Resultado] visibleSections encontrado:', parsed.visibleSections)
+          const adminSections = parsed.visibleSections;
+          return {
+            ...DEFAULT_SECTIONS,
+            categoryClassification: adminSections.categories !== false,
+            strongWeakPoints: true,
+            statistics: adminSections.categories !== false,
+            financialAnalysis: adminSections.financialRisk !== false,
+            top5Worst: true,
+            adminObservation: true,
+            adjustedFinancials: adminSections.economy !== false,
+            recommendations: adminSections.recommendations !== false,
+            visibilityGaps: true,
+          };
+        }
+      }
+    } catch (e) {
+      console.error('[Resultado] erro ao parsear:', e)
+    }
+    console.log('[Resultado] usando DEFAULT_SECTIONS')
+    return DEFAULT_SECTIONS;
+  }, [data.result]);
+
+  // Parse responses - novo schema é array de objetos
   const responses: Record<string, number> = useMemo(() => {
     const res: Record<string, number> = {};
-    try {
-      Object.assign(res, JSON.parse(data.responses));
-    } catch {}
+    if (Array.isArray(data.responses)) {
+      data.responses.forEach((r: any) => {
+        res[r.questionId] = r.answer;
+      });
+    } else if (typeof data.responses === 'string') {
+      try {
+        Object.assign(res, JSON.parse(data.responses));
+      } catch {}
+    }
     return res;
   }, [data.responses]);
 
-  // Category data
-  const categoryScores = [
-    { category: 'gestao' as CategoryKey, label: 'Gestão', percentage: data.managementScore ?? 0 },
-    { category: 'processo' as CategoryKey, label: 'Processo', percentage: data.processScore ?? 0 },
-    { category: 'tecnologia' as CategoryKey, label: 'Tecnologia', percentage: data.technologyScore ?? 0 },
-    { category: 'financeiro' as CategoryKey, label: 'Financeiro e Riscos', percentage: data.financialScore ?? 0 },
+  // Category data - novo schema
+  const categoryScores = data.scores?.map((s: any) => ({
+    category: s.category as CategoryKey,
+    label: s.category === 'gestao' ? 'Gestão' : s.category === 'processo' ? 'Processo' : s.category === 'tecnologia' ? 'Tecnologia' : 'Financeiro e Riscos',
+    percentage: s.percentage ?? 0,
+  })) ?? [
+    { category: 'gestao' as CategoryKey, label: 'Gestão', percentage: data.result?.managementScore ?? 0 },
+    { category: 'processo' as CategoryKey, label: 'Processo', percentage: data.result?.processScore ?? 0 },
+    { category: 'tecnologia' as CategoryKey, label: 'Tecnologia', percentage: data.result?.technologyScore ?? 0 },
+    { category: 'financeiro' as CategoryKey, label: 'Financeiro e Riscos', percentage: data.result?.financialScore ?? 0 },
   ];
 
   const sortedCategories = [...categoryScores].sort((a, b) => a.percentage - b.percentage);
@@ -299,9 +340,9 @@ function ResultsView({ data }: { data: AssessmentData }) {
   const handleDownload = () => {
     const categoryLines = categoryScores.map(cs => `  • ${cs.label}: ${cs.percentage.toFixed(1)}%`).join('\n');
     const recommendationLines = weakestCategories.map(cs => `\n📌 ${cs.label} (prioridade):\n${recommendations[cs.category]}`).join('\n');
-    const adminNote = (sections.adminObservation && data.adminObservation) ? `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nOBSERVAÇÃO DO ESPECIALISTA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n${data.adminObservation}\n` : '';
-    const financialNote = (sections.adjustedFinancials && (data.economyMinEdited || data.economyMaxEdited || data.financialRiskLevelEdited || data.financialLossEdited))
-      ? `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDADOS FINANCEIROS (Ajustados pelo especialista)\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n${data.economyMinEdited ? `Economia mínima estimada: ${data.economyMinEdited}%\n` : ''}${data.economyMaxEdited ? `Economia máxima estimada: ${data.economyMaxEdited}%\n` : ''}${data.financialRiskLevelEdited ? `Nível de risco financeiro: ${data.financialRiskLevelEdited}\n` : ''}${data.financialLossEdited ? `Prejuízo estimado: ${data.financialLossEdited}\n` : ''}`
+    const adminNote = (sections.adminObservation && adminObs) ? `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nOBSERVAÇÃO DO ESPECIALISTA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n${adminObs}\n` : '';
+    const financialNote = (sections.adjustedFinancials && (economyMin || economyMax || riskLevel || lossEdited))
+      ? `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDADOS FINANCEIROS (Ajustados pelo especialista)\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n${economyMin ? `Economia mínima estimada: ${economyMin}%\n` : ''}${economyMax ? `Economia máxima estimada: ${economyMax}%\n` : ''}${riskLevel ? `Nível de risco financeiro: ${riskLevel}\n` : ''}${lossEdited ? `Prejuízo estimado: ${lossEdited}\n` : ''}`
       : '';
 
     const report = `
@@ -663,44 +704,38 @@ Não substitui auditorias regulatórias oficiais.
         )}
 
         {/* ===== ADJUSTED FINANCIALS ===== */}
-        {sections.adjustedFinancials && (data.economyMinEdited || data.economyMaxEdited || data.financialRiskLevelEdited || data.financialLossEdited) && (
-          <Card className="border-0 shadow-lg bg-amber-50/50 border-amber-200">
-            <CardHeader>
-              <CardTitle className="text-xl flex items-center gap-2 text-amber-800">
-                <FileText className="w-5 h-5" />
-                Análise Financeira Ajustada
-              </CardTitle>
-              <CardDescription>Valores revisados pelo especialista Klever Oliveira Lopes</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {data.economyMinEdited && (
-                  <div className="p-4 bg-white rounded-xl border">
-                    <p className="text-xs text-muted-foreground">Economia Mínima Estimada</p>
-                    <p className="text-xl font-bold text-emerald-600">{data.economyMinEdited}%</p>
+{sections.adjustedFinancials && (economyMin || economyMax || riskLevel || lossEdited) && (
+          <>
+            {(economyMin || economyMax) && (
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-muted-foreground">Economia Estimada</p>
+                {economyMin && (
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-sm text-muted-foreground">Mínima:</p>
+                    <p className="text-xl font-bold text-emerald-600">{economyMin}%</p>
                   </div>
                 )}
-                {data.economyMaxEdited && (
-                  <div className="p-4 bg-white rounded-xl border">
-                    <p className="text-xs text-muted-foreground">Economia Máxima Estimada</p>
-                    <p className="text-xl font-bold text-emerald-600">{data.economyMaxEdited}%</p>
-                  </div>
-                )}
-                {data.financialRiskLevelEdited && (
-                  <div className="p-4 bg-white rounded-xl border">
-                    <p className="text-xs text-muted-foreground">Nível de Risco Financeiro</p>
-                    <p className="text-lg font-bold text-amber-600">{data.financialRiskLevelEdited}</p>
-                  </div>
-                )}
-                {data.financialLossEdited && (
-                  <div className="p-4 bg-white rounded-xl border">
-                    <p className="text-xs text-muted-foreground">Prejuízo Estimado</p>
-                    <p className="text-lg font-bold text-red-600">{data.financialLossEdited}</p>
+                {economyMax && (
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-sm text-muted-foreground">Máxima:</p>
+                    <p className="text-xl font-bold text-emerald-600">{economyMax}%</p>
                   </div>
                 )}
               </div>
-            </CardContent>
-          </Card>
+            )}
+            {riskLevel && (
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-muted-foreground">Risco Financeiro</p>
+                <p className="text-lg font-bold text-amber-600">{riskLevel}</p>
+              </div>
+            )}
+            {lossEdited && (
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-muted-foreground">Prejuízo Estimado</p>
+                <p className="text-lg font-bold text-red-600">{lossEdited}</p>
+              </div>
+            )}
+          </>
         )}
 
         {/* ===== RECOMMENDATIONS ===== */}
@@ -758,11 +793,22 @@ Não substitui auditorias regulatórias oficiais.
           </Card>
         )}
 
-        {/* Download Button */}
-        <div className="text-center">
+        {/* Download Buttons */}
+        <div className="text-center flex flex-col sm:flex-row gap-4 justify-center">
           <Button onClick={handleDownload} size="lg" className="bg-teal-600 hover:bg-teal-700">
             <Download className="w-4 h-4 mr-2" />
-            Baixar Relatório em Texto
+            Baixar Relatório (TXT)
+          </Button>
+          <Button 
+            asChild 
+            size="lg" 
+            variant="outline"
+            className="border-teal-600 text-teal-700 hover:bg-teal-50"
+          >
+            <a href={`/api/assessment/${id}/pdf`} target="_blank" rel="noopener noreferrer">
+              <Download className="w-4 h-4 mr-2" />
+              Baixar Relatório (PDF)
+            </a>
           </Button>
         </div>
 
@@ -824,5 +870,5 @@ export default function ResultadoPage() {
   if (loading) return <LoadingScreen />;
   if (error || !data) return <NotAvailableScreen />;
   if (data.status !== 'released' && data.status !== 'sent') return <NotAvailableScreen />;
-  return <ResultsView data={data} />;
+  return <ResultsView data={data} id={id} />;
 }
