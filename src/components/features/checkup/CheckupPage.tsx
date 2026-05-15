@@ -1306,16 +1306,15 @@ function AssessmentScreen({
                   const displayValue = isZero ? "?" : option.value;
                   const buttonClasses = isSelected
                     ? isZero
-                      ? "border-amber-500 bg-amber-100 shadow-sm"
+                      ? "border-amber-400 bg-amber-50 shadow-sm"
                       : "border-teal-600 bg-teal-100 shadow-sm"
-                    : isZero
-                      ? "border-amber-200 bg-amber-50 hover:border-amber-300 hover:bg-amber-100"
-                      : "border-border bg-card hover:border-teal-300 hover:bg-teal-50";
-                  const badgeClasses = isSelected
-                    ? isZero
-                      ? "bg-amber-500 border-amber-500 text-amber-900"
-                      : "bg-teal-600 border-teal-600 text-white"
-                    : "border-muted-foreground/30 text-muted-foreground";
+                    : "border-border bg-card hover:border-teal-300 hover:bg-teal-50";
+                  const badgeClasses =
+                    isSelected && isZero
+                      ? "bg-amber-500 border-amber-500 text-white"
+                      : isSelected
+                        ? "bg-teal-600 border-teal-600 text-white"
+                        : "border-muted-foreground/30 text-muted-foreground";
                   return (
                     <button
                       key={option.value}
@@ -1329,8 +1328,22 @@ function AssessmentScreen({
                         {displayValue}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm">{option.label}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5">
+                        <p
+                          className={
+                            isZero && isSelected
+                              ? "font-bold text-base text-amber-900"
+                              : "font-medium text-sm"
+                          }
+                        >
+                          {option.label}
+                        </p>
+                        <p
+                          className={
+                            isZero && isSelected
+                              ? "text-sm text-amber-800 mt-0.5"
+                              : "text-xs text-muted-foreground mt-0.5"
+                          }
+                        >
                           {option.impact}
                         </p>
                       </div>
