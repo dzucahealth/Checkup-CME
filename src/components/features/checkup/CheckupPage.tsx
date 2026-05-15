@@ -418,10 +418,9 @@ export default function CheckupPage() {
 
   const handleStart = async () => {
     if (hasExistingAssessment && assessmentId) {
-      // Se já tem avaliação mas não deu consentimento, vai para consent
-      // Se já deu consentimento, vai para assessment
-      const consentGiven = registrationData.name !== ""; // simplificado: se tem dados de registro, tem consentimento
-      if (consentGiven) {
+      // Se já deu consentimento, vai direto para as questões
+      // Se não deu consentimento, vai para consent
+      if (consent1) {
         setScreen("assessment");
       } else {
         setScreen("consent");
