@@ -1423,11 +1423,9 @@ function ThankYouScreen({ onRestart }: { onRestart: () => void }) {
 
             <div className="rounded-xl p-5 space-y-2">
               <p className="font-semibold text-center text-slate-900">
-                Se essa jornada foi proveitosa e você deseja iniciar um processo
-                de assessoria e consultoria especializada:
-              </p>
-              <p className="text-center text-slate-600 text-sm">
-                Estamos aqui para ajudar! Entre em contato conosco.
+                Quer agilizar a entrega do seu diagnóstico?
+                Clique no botão abaixo, envie um print dessa tela pelo WhatsApp e informe seu nome.
+                O Klever acompanhará pessoalmente seu Check-up e combinará com você a entrega do diagnóstico personalizado.
               </p>
             </div>
 
