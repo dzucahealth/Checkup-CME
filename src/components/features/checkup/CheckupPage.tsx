@@ -36,6 +36,8 @@ import {
   MapPin,
   Hospital,
   LogOut,
+  Mail,
+  Phone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -1391,23 +1393,22 @@ function ThankYouScreen({ onRestart }: { onRestart: () => void }) {
             <div className="mx-auto w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center mb-4">
               <CheckCircle2 className="w-8 h-8 text-teal-600" />
             </div>
-            <CardTitle className="text-2xl sm:text-3xl">
-              Obrigado por completar o Checkup CME Inteligente!
-            </CardTitle>
+            <CardTitle className="text-2xl sm:text-3xl">Inteligente!</CardTitle>
+            <p className="text-muted-foreground mt-2 text-base">
+              Suas respostas foram registradas com sucesso. Nosso time está
+              preparando seu diagnóstico personalizado com base nas informações
+              fornecidas.
+            </p>
           </CardHeader>
           <CardContent className="space-y-6">
-            <p className="text-center text-muted-foreground leading-relaxed">
-              Suas respostas foram registradas com sucesso. Nosso time está
-              preparando seu diagnóstico personalizado.
-            </p>
-            <div className="bg-teal-50 border border-teal-200 rounded-xl p-5 space-y-3">
-              <p className="font-semibold text-teal-900 text-center">
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 space-y-3">
+              <p className="font-semibold text-blue-900 text-center">
                 O que acontece agora?
               </p>
-              <ul className="space-y-2 text-sm text-teal-800">
+              <ul className="space-y-2 text-sm text-blue-800">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" />
-                  <span>Seus dados serão analisados</span>
+                  <span>Seus dados serão analisados com atenção</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" />
@@ -1415,10 +1416,64 @@ function ThankYouScreen({ onRestart }: { onRestart: () => void }) {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" />
-                  <span>Você receberá o link para acessar seu diagnóstico</span>
+                  <span>Nosso especialista entrará em contato agendando a devolutiva do seu Checkup CME Inteligente</span>
                 </li>
               </ul>
             </div>
+
+            <div className="rounded-xl p-5 space-y-2">
+              <p className="font-semibold text-center text-slate-900">
+                Se essa jornada foi proveitosa e você deseja iniciar um processo
+                de assessoria e consultoria especializada:
+              </p>
+              <p className="text-center text-slate-600 text-sm">
+                Estamos aqui para ajudar! Entre em contato conosco.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              <button
+                onClick={() =>
+                  (window.location.href = "mailto:CMEINTELIGENTESR@GMAIL.COM")
+                }
+                className="flex items-center gap-3 p-4 bg-slate-50 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-100 transition-colors cursor-pointer text-left"
+              >
+                <Mail className="w-5 h-5 text-blue-600" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-muted-foreground">Email</p>
+                  <p className="font-medium text-sm break-all">
+                    CMEINTELIGENTESR@GMAIL.COM
+                  </p>
+                </div>
+              </button>
+              <button
+                onClick={() => {
+                  const message = encodeURIComponent(
+                    "Olá! Finalizei a pesquisa CME Inteligente e gostaria de mais informações sobre o processo de assessoria e consultoria especializada.",
+                  );
+                  window.open(
+                    `https://wa.me/5511939610399?text=${message}`,
+                    "_blank",
+                  );
+                }}
+                className="flex items-center gap-3 p-4 bg-slate-50 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-100 transition-colors cursor-pointer text-left"
+              >
+                <Phone className="w-5 h-5 text-green-600" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-muted-foreground">WhatsApp</p>
+                  <p className="font-medium text-sm">(11) 93961-0399</p>
+                </div>
+              </button>
+            </div>
+
+            <p className="text-xs text-muted-foreground text-center leading-relaxed">
+              Material exclusivo e de propriedade da CME INTELIGENTE.
+              Metodologia, lógica de dados, estrutura técnica e perguntas
+              desenvolvidas por Klever Oliveira Lopes. Proibida a reprodução
+              total ou parcial, replicação, adaptação, distribuição ou
+              utilização sem autorização expressa.
+            </p>
+
             <Separator />
             <div className="flex gap-3 justify-center">
               <Button variant="outline" onClick={logout}>

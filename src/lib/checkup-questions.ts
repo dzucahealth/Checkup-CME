@@ -1800,7 +1800,7 @@ export const checkupQuestions: Question[] = [
     id: 'processo_19',
     category: 'processo',
     question: 'Quais saneantes são utilizados na limpeza dos artigos e instrumentais na CME?',
-    description: 'A escolha correta dos saneantes é fundamental para a eficácia da descontaminação e limpeza dos materiais, conforme as recomendações da RDC 15/2012 e boas práticas.',
+    description: 'A escolha correta dos saneantes é fundamental para a eficácia da descontaminação e limpeza dos materiais, conforme as RECOMENDAÇÕES SANITÁRIAS VIGENTES e boas práticas.',
     options: [
       {
         value: 4,
@@ -2083,42 +2083,6 @@ export const checkupQuestions: Question[] = [
     weight: 1,
   },
 
-  // ==================== CAIXAS DE PERFUROCORTANTES ====================
-  {
-    id: 'processo_24',
-    category: 'processo',
-    question: 'Como está a disponibilidade de caixas de perfurocortantes na CME e quais áreas são contempladas?',
-    description: 'As caixas de perfurocortantes são obrigatórias em todos os ambientes onde há geração de resíduos perfurocortantes, conforme RDC 222/2018.',
-    options: [
-      {
-        value: 4,
-        label: 'Disponíveis em todas as áreas com caixas de material rígido, em altura e local adequados',
-        impact: 'Excelente: cobertura completa com material adequado (rígido) e posicionamento correto (altura entre 80cm e 120cm) demonstra conformidade plena com a RDC 222/2018.'
-      },
-      {
-        value: 3,
-        label: 'Disponíveis na maioria das áreas, mas algumas ainda não possuem',
-        impact: 'Bom: a maioria das áreas está coberta. Recomenda-se mapear os pontos ausentes e implantar imediatamente para garantir cobertura total.'
-      },
-      {
-        value: 2,
-        label: 'Utilizamos caixas de papelão ou material não rígido',
-        impact: 'Atenção: caixas de papelão não oferecem resistência adequada e podem gerar perfurações acidentais. A RDC 222/2018 exige recipientes rígidos resistentes à punctura.'
-      },
-      {
-        value: 1,
-        label: 'Não há disponibilidade padronizada de caixas de perfurocortantes',
-        impact: 'Risco crítico: a ausência de recipientes adequados para perfurocortantes expõe todos os profissionais a riscos de acidentes percutâneos e possível contaminação por patógenos sanguíneos.'
-      },
-      {
-        value: 0,
-        label: 'Não possuo esta informação',
-        impact: 'FALTA DE VISIBILIDADE: é obrigatório garantir recipientes rígidos para perfurocortantes em todos os pontos de geração conforme RDC 222/2018.'
-      },
-    ],
-    weight: 1,
-  },
-
   // ==================== EQUIPE DE LIMPEZA ====================
   {
     id: 'processo_25',
@@ -2149,7 +2113,7 @@ export const checkupQuestions: Question[] = [
       {
         value: 0,
         label: 'Não possuo esta informação',
-        impact: 'FALTA DE VISIBILIDADE: é fundamental mapear a estrutura da equipe de limpeza e garantir dedicatória ao setor para qualidade e biossegurança.'
+        impact: 'FALTA DE VISIBILIDADE: é fundamental mapear a estrutura da equipe de limpeza e garantir limpeza dedicada ao setor para qualidade e biossegurança.'
       },
     ],
     weight: 1,
@@ -2201,7 +2165,7 @@ export const checkupQuestions: Question[] = [
       {
         value: 4,
         label: 'Espaço adequado com planejamento de crescimento formalizado',
-        impact: 'Excelente: espaço adequado com planejamento demonstra visão estratégica, prevents瓶颈 operacionais e garante capacidade para expansão futura organizada.'
+        impact: 'Excelente: espaço adequado com planejamento demonstra visão estratégica, prevenção de gargalos operacionais e garante capacidade para expansão futura organizada.'
       },
       {
         value: 3,
@@ -2335,42 +2299,6 @@ export const checkupQuestions: Question[] = [
     weight: 1,
   },
 
-  // ==================== ESCOLARIDADE / FORMALIZAÇÃO DA EQUIPE ====================
-  {
-    id: 'gestao_16',
-    category: 'gestao',
-    question: 'Qual é o nível de escolaridade e formalização da equipe que atua na CME?',
-    description: 'A escolaridade e a capacitação formal da equipe impactam diretamente na qualidade dos processos, na interpretação de protocolos, na capacidade de resolução de problemas e na conformidade com as normas vigentes.',
-    options: [
-      {
-        value: 4,
-        label: 'Equipe com ensino técnico ou superior em saúde, com especializações e capacitações em CME',
-        impact: 'Excelente: equipe qualificada com formação técnica ou superior demonstra investimento em capital humano, maior capacidade de compreensão dos processos e autonomia para tomadas de decisão seguras.'
-      },
-      {
-        value: 3,
-        label: 'Equipe com ensino médio completo e capacitações específicas em CME realizadas periodicamente',
-        impact: 'Bom: a combinação de escolaridade com capacitações específicas em CME é positiva. Recomenda-se incentivar a busca por formação técnica e promover educação continuada.'
-      },
-      {
-        value: 2,
-        label: 'Equipe com ensino médio, mas sem capacitações formais ou periódicas em CME',
-        impact: 'Atenção: a falta de capacitações específicas pode comprometer a execução correta dos processos, a interpretação de protocolos e a resposta a situações não rotineiras. Recomenda-se treinar.'
-      },
-      {
-        value: 1,
-        label: 'Equipe sem formação mínima adequada ou sem acesso a capacitações',
-        impact: 'Risco crítico: a falta de formação e capacitação compromete a qualidade de todos os processos da CME, gera riscos à segurança do paciente e pode configurar não conformidade em fiscalizações.'
-      },
-      {
-        value: 0,
-        label: 'Não possuo esta informação',
-        impact: 'FALTA DE VISIBILIDADE: é fundamental mapear o nível de escolaridade e capacitação da equipe para planejar ações de qualificação e garantir conformidade.'
-      },
-    ],
-    weight: 1,
-  },
-
   // ==================== SECADORA / ARMÁRIO DE SECAGEM ====================
   {
     id: 'tecnologia_16',
@@ -2402,6 +2330,42 @@ export const checkupQuestions: Question[] = [
         value: 0,
         label: 'Não possuo esta informação',
         impact: 'FALTA DE VISIBILIDADE: é fundamental mapear os equipamentos de secagem para garantir a qualidade do processo e dimensionar necessidades de investimento.'
+      },
+    ],
+    weight: 1,
+  },
+
+  // ==================== ESCOLARIDADE / FORMALIZAÇÃO DA EQUIPE ====================
+  {
+    id: 'gestao_16',
+    category: 'gestao',
+    question: 'Qual é o nível de escolaridade e formalização da equipe que atua na CME?',
+    description: 'A escolaridade e a capacitação formal da equipe impactam diretamente na qualidade dos processos, na interpretação de protocolos, na capacidade de resolução de problemas e na conformidade com as normas vigentes.',
+    options: [
+      {
+        value: 4,
+        label: 'Equipe com ensino técnico ou superior em saúde, com especializações e capacitações em CME',
+        impact: 'Excelente: equipe qualificada com formação técnica ou superior demonstra investimento em capital humano, maior capacidade de compreensão dos processos e autonomia para tomadas de decisão seguras.'
+      },
+      {
+        value: 3,
+        label: 'Equipe com ensino médio completo e capacitações específicas em CME realizadas periodicamente',
+        impact: 'Bom: a combinação de escolaridade com capacitações específicas em CME é positiva. Recomenda-se incentivar a busca por formação técnica e promover educação continuada.'
+      },
+      {
+        value: 2,
+        label: 'Equipe com ensino médio, mas sem capacitações formais ou periódicas em CME',
+        impact: 'Atenção: a falta de capacitações específicas pode comprometer a execução correta dos processos, a interpretação de protocolos e a resposta a situações não rotineiras. Recomenda-se treinar.'
+      },
+      {
+        value: 1,
+        label: 'Equipe sem formação mínima adequada ou sem acesso a capacitações',
+        impact: 'Risco crítico: a falta de formação e capacitação compromete a qualidade de todos os processos da CME, gera riscos à segurança do paciente e pode configurar não conformidade em fiscalizações.'
+      },
+      {
+        value: 0,
+        label: 'Não possuo esta informação',
+        impact: 'FALTA DE VISIBILIDADE: é fundamental mapear o nível de escolaridade e capacitação da equipe para planejar ações de qualificação e garantir conformidade.'
       },
     ],
     weight: 1,
