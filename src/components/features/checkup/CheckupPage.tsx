@@ -1330,20 +1330,14 @@ function AssessmentScreen({
                       <div className="flex-1 min-w-0">
                         <p
                           className={
-                            isZero && isSelected
-                              ? "font-bold text-base text-amber-900"
+                            isZero
+                              ? "font-medium text-sm text-amber-700"
                               : "font-medium text-sm"
                           }
                         >
                           {option.label}
                         </p>
-                        <p
-                          className={
-                            isZero && isSelected
-                              ? "text-sm text-amber-800 mt-0.5"
-                              : "text-xs text-muted-foreground mt-0.5"
-                          }
-                        >
+                        <p className="text-xs text-muted-foreground mt-0.5">
                           {option.impact}
                         </p>
                       </div>
