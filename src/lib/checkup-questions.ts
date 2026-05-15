@@ -110,7 +110,7 @@ export const checkupQuestions: Question[] = [
       { 
         value: 0, 
         label: 'Não possuo esta informação',
-        impact: 'FALTA DE VISIBILIDADE: a ausência desta informação indica desconnect entre CME e centro cirúrgico'
+        impact: 'FALTA DE VISIBILIDADE: a ausência desta informação indica falha na integração entre CME e centro cirúrgico'
       },
     ],
     weight: 1,
@@ -1483,40 +1483,7 @@ export const checkupQuestions: Question[] = [
     ],
     weight: 2,
   },
-  {
-    id: 'processo_15',
-    category: 'processo',
-    question: 'Sua CME possui armário de selagem? Quantas unidades?',
-    description: 'O armário de selagem garante a integridade do pacote e a efetividade da esterilização.',
-    options: [
-      {
-        value: 1,
-        label: 'Não possuímos armário de selagem',
-        impact: 'Risco de contaminação pós-esterilização, selagem manual sem controle'
-      },
-      {
-        value: 2,
-        label: 'Possuímos 1 unidade, mas pode ser insuficiente para a demanda',
-        impact: 'Gargalo operacional, risco de fila e atraso no preparo'
-      },
-      {
-        value: 3,
-        label: 'Possuímos 2 a 3 unidades para atendimento da demanda',
-        impact: 'Boa capacidade, atendimento adequado ao volume de processamento'
-      },
-      {
-        value: 4,
-        label: 'Possuímos 4 ou mais unidades, dimensionadas para a demanda',
-        impact: 'Capacidade plena, sem gargalos, selagem padronizada e eficiente'
-      },
-      {
-        value: 0,
-        label: 'Não possuo esta informação',
-        impact: 'FALTA DE VISIBILIDADE: desconhecer o equipamento de selagem é um risco operacional'
-      },
-    ],
-    weight: 2,
-  },
+  
   {
     id: 'processo_16',
     category: 'processo',
@@ -1598,7 +1565,7 @@ export const checkupQuestions: Question[] = [
       },
       {
         value: 2,
-        label: 'Papel grau cirúrgico e SMS, além de papel crepado/algodão',
+        label: 'Papel grau cirúrgico e SMS, além de papel crepado/tecido algodão',
         impact: 'Boa cobertura para instrumental comum, barreira microbiológica adequada'
       },
       {
@@ -1712,7 +1679,7 @@ export const checkupQuestions: Question[] = [
       },
       {
         value: 4,
-        label: 'Possuímos todos os tipos (vapor, peróxido e plasma) em quantidade adequada à demanda',
+        label: 'Possuímos todos os tipos (vapor, peroxido, plasma e formol) em quantidade adequada à demanda',
         impact: 'Parque tecnológico completo, autossuficiência, máxima versatilidade'
       },
       {
@@ -1960,7 +1927,7 @@ export const checkupQuestions: Question[] = [
       },
       {
         value: 1,
-        label: '7 dias por semana, 24 horas (sem folga regulamentar adequada)',
+        label: '7 dias por semana, 12 horas (sem folga regulamentar adequada)',
         impact: 'Risco crítico: escala contínua sem descanso adequado gera fadiga, aumenta erros, reduz qualidade e pode gerar passivos trabalhistas. Avaliar NR-01 e gestão de riscos psicossociais.'
       },
       {
