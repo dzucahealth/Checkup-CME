@@ -646,9 +646,11 @@ function ConsentScreen({ consent1, consent2, onConsentChange, onStart, onBack }:
             <div className="bg-muted/50 rounded-xl p-5 space-y-4 text-sm text-muted-foreground leading-relaxed max-h-72 overflow-y-auto custom-scrollbar">
               <p className="font-semibold text-foreground flex items-center gap-2"><Shield className="w-4 h-4 text-primary" />Política de Privacidade e Termos de Uso</p>
               <Separator />
-              <p><strong className="text-foreground">Finalidade:</strong> Os dados coletados serão utilizados exclusivamente para a geração do diagnóstico de avaliação do CME.</p>
-              <p><strong className="text-foreground">Base Legal:</strong> O tratamento dos dados é fundamentado no consentimento do titular (Art. 7º, I, Lei nº 13.709/2018 - LGPD).</p>
-              <p><strong className="text-foreground">Compartilhamento:</strong> Os dados não serão compartilhados com terceiros sem o seu consentimento expresso.</p>
+              <p><strong className="text-foreground">Finalidade:</strong> Os dados coletados serão utilizados para diagnóstico de avaliação do CME, identificação de oportunidades de melhoria e recomendações personalizadas.</p>
+              <p><strong className="text-foreground">Base Legal:</strong> O tratamento dos dados é fundamentado no consentimento do titular (Art. 7º, I, LGPD) e legítimo interesse para melhoria de serviços de saúde.</p>
+              <p><strong className="text-foreground">Compartilhamento:</strong> Consentimento para coleta e tratamento de nome, cargo, telefone, email, tipo de estabelecimento, dados operacionais e respostas do questionário; sem compartilhamento a terceiros sem consentimento, exceto obrigação legal ou regulatória.</p>
+              <p><strong className="text-foreground">Retenção:</strong> Os dados serão mantidos enquanto necessários ou até exclusão por e-mail contato@cmeinteligente.com.br.</p>
+              <p><strong className="text-foreground">Segurança:</strong> Medidas técnicas e organizacionais para proteger os dados.</p>
             </div>
 
             <div className="space-y-4">
