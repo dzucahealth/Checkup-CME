@@ -1800,17 +1800,12 @@ export const checkupQuestions: Question[] = [
     id: 'processo_19',
     category: 'processo',
     question: 'Quais saneantes são utilizados na limpeza dos artigos e instrumentais na CME?',
-    description: 'A escolha correta dos saneantes é fundamental para a eficácia da descontaminação e limpeza dos materiais, conforme as RECOMENDAÇÕES SANITÁRIAS VIGENTES e boas práticas.',
+    description: 'A escolha correta dos saneantes é fundamental para a eficácia da descontaminação e limpeza dos materiais, conforme as Recomendações Sanitárias Vigentes e boas práticas.',
     options: [
       {
-        value: 4,
-        label: 'Detergente enzimático + neutro + alcalino (usos diferenciados conforme necessidade)',
-        impact: 'Excelente: a diversificação dos saneantes demonstra protocolo adequado, com seleção correta conforme tipo de sujidade e material. Isso reflete adesão às boas práticas e reduz riscos de danos aos instrumentais e falhas na limpeza.'
-      },
-      {
-        value: 3,
-        label: 'Utilizamos detergente enzimático e mais um tipo (neutro ou alcalino)',
-        impact: 'Bom nível de cobertura sanitária, com pelo menos duas opções de saneantes. Recomenda-se avaliar a necessidade de incluir um terceiro tipo para situações específicas de sujidade persistente.'
+        value: 1,
+        label: 'Não utilizamos saneantes específicos para CME / uso informal',
+        impact: 'Risco crítico: a ausência de saneantes adequados para CME compromete diretamente a qualidade da limpeza, a segurança da esterilização e pode gerar riscos aos pacientes e profissionais.'
       },
       {
         value: 2,
@@ -1818,9 +1813,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Risco moderado: o uso de um único tipo de saneante para todas as situações pode comprometer a eficácia da limpeza em instrumentais com sujidades específicas. Recomenda-se diversificar conforme protocolo.'
       },
       {
-        value: 1,
-        label: 'Não utilizamos saneantes específicos para CME / uso informal',
-        impact: 'Risco crítico: a ausência de saneantes adequados para CME compromete diretamente a qualidade da limpeza, a segurança da esterilização e pode gerar riscos aos pacientes e profissionais.'
+        value: 3,
+        label: 'Utilizamos detergente enzimático e mais um tipo (neutro ou alcalino)',
+        impact: 'Bom nível de cobertura sanitária, com pelo menos duas opções de saneantes. Recomenda-se avaliar a necessidade de incluir um terceiro tipo para situações específicas de sujidade persistente.'
+      },
+      {
+        value: 4,
+        label: 'Detergente enzimático + neutro + alcalino (usos diferenciados conforme necessidade)',
+        impact: 'Excelente: a diversificação dos saneantes demonstra protocolo adequado, com seleção correta conforme tipo de sujidade e material. Isso reflete adesão às boas práticas e reduz riscos de danos aos instrumentais e falhas na limpeza.'
       },
       {
         value: 0,
@@ -1839,14 +1839,9 @@ export const checkupQuestions: Question[] = [
     description: 'O uso de lubrificantes e desincrustantes é essencial para preservar a funcionalidade dos instrumentais cirúrgicos e garantir a eficácia do processo de limpeza.',
     options: [
       {
-        value: 4,
-        label: 'Sim, utilizamos lubrificante e desincrustante com frequência adequada (a cada processo ou conforme protocolo)',
-        impact: 'Excelente: o uso regular e protocolado de lubrificantes e desincrustantes preserva a vida útil dos instrumentais, evita travamentos, reduz corrosão e garante a eficácia da esterilização.'
-      },
-      {
-        value: 3,
-        label: 'Sim, utilizamos ambos, mas a frequência não é totalmente padronizada',
-        impact: 'Bom: o setor reconhece a importância dos produtos, mas a falta de padronização pode gerar inconsistências. Recomenda-se formalizar o protocolo com frequência definida.'
+        value: 1,
+        label: 'Não utilizamos lubrificante nem desincrustante',
+        impact: 'Risco crítico: a ausência desses produtos acelera o desgaste dos instrumentais, compromete a qualidade da limpeza e pode gerar perda patrimonial significativa e riscos cirúrgicos.'
       },
       {
         value: 2,
@@ -1854,9 +1849,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: o uso parcial compromete etapas importantes do processo. O desincrustante remove resíduos mineralizados e o lubrificante protege articulações. Ambos são complementares.'
       },
       {
-        value: 1,
-        label: 'Não utilizamos lubrificante nem desincrustante',
-        impact: 'Risco crítico: a ausência desses produtos acelera o desgaste dos instrumentais, compromete a qualidade da limpeza e pode gerar perda patrimonial significativa e riscos cirúrgicos.'
+        value: 3,
+        label: 'Sim, utilizamos ambos, mas a frequência não é totalmente padronizada',
+        impact: 'Bom: o setor reconhece a importância dos produtos, mas a falta de padronização pode gerar inconsistências. Recomenda-se formalizar o protocolo com frequência definida.'
+      },
+      {
+        value: 4,
+        label: 'Sim, utilizamos lubrificante e desincrustante com frequência adequada (a cada processo ou conforme protocolo)',
+        impact: 'Excelente: o uso regular e protocolado de lubrificantes e desincrustantes preserva a vida útil dos instrumentais, evita travamentos, reduz corrosão e garante a eficácia da esterilização.'
       },
       {
         value: 0,
@@ -1875,14 +1875,9 @@ export const checkupQuestions: Question[] = [
     description: 'A identificação visual adequada das caixas é essencial para rastreabilidade, organização, agilidade no preparo e redução de erros cirúrgicos.',
     options: [
       {
-        value: 4,
-        label: 'Identificação completa com cores por especialidade + etiquetas com nome e conteúdo detalhado',
-        impact: 'Excelente: sistema de identificação robusto que facilita a rastreabilidade, reduz erros de preparo, agiliza o processo de separação e contribui para a segurança cirúrgica.'
-      },
-      {
-        value: 3,
-        label: 'Usamos marcação por cor (fita ou tinta) por especialidade',
-        impact: 'Bom: a codificação por cores é uma prática eficaz. Recomenda-se complementar com etiquetas descritivas para maior detalhamento do conteúdo.'
+        value: 1,
+        label: 'Sem identificação padronizada / identificação informal',
+        impact: 'Risco crítico: a falta de identificação adequada compromete a rastreabilidade, aumenta o risco de erros cirúrgicos e dificulta o controle de inventário.'
       },
       {
         value: 2,
@@ -1890,9 +1885,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: a identificação parcial pode gerar confusão, erros de preparo e lentidão no processo. A padronização visual é recomendada.'
       },
       {
-        value: 1,
-        label: 'Sem identificação padronizada / identificação informal',
-        impact: 'Risco crítico: a falta de identificação adequada compromete a rastreabilidade, aumenta o risco de erros cirúrgicos e dificulta o controle de inventário.'
+        value: 3,
+        label: 'Usamos marcação por cor (fita ou tinta) por especialidade',
+        impact: 'Bom: a codificação por cores é uma prática eficaz. Recomenda-se complementar com etiquetas descritivas para maior detalhamento do conteúdo.'
+      },
+      {
+        value: 4,
+        label: 'Identificação completa com cores por especialidade + etiquetas com nome e conteúdo detalhado',
+        impact: 'Excelente: sistema de identificação robusto que facilita a rastreabilidade, reduz erros de preparo, agiliza o processo de separação e contribui para a segurança cirúrgica.'
       },
       {
         value: 0,
@@ -1911,14 +1911,9 @@ export const checkupQuestions: Question[] = [
     description: 'O regime de funcionamento impacta diretamente na capacidade operativa, na qualidade dos processos, na gestão de equipe e na continuidade do atendimento cirúrgico.',
     options: [
       {
-        value: 4,
-        label: '12x36 ou 24x72 (escala com descanso adequado) com plantão noturno',
-        impact: 'Boa cobertura: escala com descanso preservado favorece a qualidade do trabalho e reduz fadiga. Plantão noturno garante continuidade para emergências.'
-      },
-      {
-        value: 3,
-        label: '8 horas diárias, 5 a 6 dias por semana (jornada comercial estendida)',
-        impact: 'Cobertura adequada para demanda regular. Se houver cirurgias fora do horário, pode haver necessidade de reestruturação para atendimento emergencial.'
+        value: 1,
+        label: '7 dias por semana, 12 horas (sem folga regulamentar adequada)',
+        impact: 'Risco crítico: escala contínua sem descanso adequado gera fadiga, aumenta erros, reduz qualidade e pode gerar passivos trabalhistas. Avaliar NR-01 e gestão de riscos psicossociais.'
       },
       {
         value: 2,
@@ -1926,9 +1921,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: a limitação ao horário comercial pode comprometer o atendimento de emergências e gerar acúmulo de processamento, impactando prazos e qualidade.'
       },
       {
-        value: 1,
-        label: '7 dias por semana, 12 horas (sem folga regulamentar adequada)',
-        impact: 'Risco crítico: escala contínua sem descanso adequado gera fadiga, aumenta erros, reduz qualidade e pode gerar passivos trabalhistas. Avaliar NR-01 e gestão de riscos psicossociais.'
+        value: 3,
+        label: '8 horas diárias, 5 a 6 dias por semana (jornada comercial estendida)',
+        impact: 'Cobertura adequada para demanda regular. Se houver cirurgias fora do horário, pode haver necessidade de reestruturação para atendimento emergencial.'
+      },
+      {
+        value: 4,
+        label: '12x36 ou 24x72 (escala com descanso adequado) com plantão noturno',
+        impact: 'Boa cobertura: escala com descanso preservado favorece a qualidade do trabalho e reduz fadiga. Plantão noturno garante continuidade para emergências.'
       },
       {
         value: 0,
@@ -1947,14 +1947,9 @@ export const checkupQuestions: Question[] = [
     description: 'A gestão de funcionários adaptados requer atenção especial às condições de trabalho, adequação de tarefas e conformidade com legislação trabalhista e de segurança.',
     options: [
       {
-        value: 4,
-        label: 'Sim, e possuem acompanhamento adequado com adequação de função e suporte',
-        impact: 'Excelente: a inclusão com suporte adequado demonstra maturidade na gestão de pessoas e conformidade com legislação. Funcionários bem apoiados são produtivos e engajados.'
-      },
-      {
-        value: 3,
-        label: 'Sim, mas sem acompanhamento ou adequação formalizada',
-        impact: 'Atenção: a presença de funcionários adaptados sem suporte formal pode gerar riscos trabalhistas e de segurança. Recomenda-se formalizar o PGR e adequações necessárias.'
+        value: 1,
+        label: 'Não possuímos, mas não há mapeamento ou avaliação sobre isso',
+        impact: 'Risco: a ausência de mapeamento pode esconder necessidades não atendidas e passivos trabalhistas. Recomenda-se realizar levantamento junto ao SESMT ou responsável.'
       },
       {
         value: 2,
@@ -1962,9 +1957,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Risco moderado: dificuldades na gestão de adaptações podem impactar a operação e a saúde do trabalhador. Recomenda-se buscar assessoria especializada em ergonomia e medicina ocupacional.'
       },
       {
-        value: 1,
-        label: 'Não possuímos, mas não há mapeamento ou avaliação sobre isso',
-        impact: 'Risco: a ausência de mapeamento pode esconder necessidades não atendidas e passivos trabalhistas. Recomenda-se realizar levantamento junto ao SESMT ou responsável.'
+        value: 3,
+        label: 'Sim, mas sem acompanhamento ou adequação formalizada',
+        impact: 'Atenção: a presença de funcionários adaptados sem suporte formal pode gerar riscos trabalhistas e de segurança. Recomenda-se formalizar o PGR e adequações necessárias.'
+      },
+      {
+        value: 4,
+        label: 'Sim, e possuem acompanhamento adequado com adequação de função e suporte',
+        impact: 'Excelente: a inclusão com suporte adequado demonstra maturidade na gestão de pessoas e conformidade com legislação. Funcionários bem apoiados são produtivos e engajados.'
       },
       {
         value: 0,
@@ -1983,14 +1983,9 @@ export const checkupQuestions: Question[] = [
     description: 'A NR-01 (Gerenciamento de Riscos Ocupacionais) exige a avaliação de riscos psicossociais como estresse, assédio, carga mental excessiva e fatores que impactam a saúde mental dos trabalhadores.',
     options: [
       {
-        value: 4,
-        label: 'Sim, o levantamento foi realizado e ações preventivas foram implementadas',
-        impact: 'Excelente: a conformidade com a NR-01 demonstra compromisso com a saúde mental da equipe, reduz riscos trabalhistas e melhora o ambiente e a produtividade.'
-      },
-      {
-        value: 3,
-        label: 'Sim, o levantamento foi realizado, mas as ações ainda estão em planejamento',
-        impact: 'Bom: o diagnóstico foi feito, o que já coloca o setor à frente. É fundamental avançar rapidamente para a fase de implementação das ações preventivas.'
+        value: 1,
+        label: 'Não, o setor ainda não realizou nenhum levantamento de riscos psicossociais',
+        impact: 'Risco crítico: a ausência de levantamento de riscos psicossociais configura não conformidade com a NR-01, expõe a instituição a autuações e passivos trabalhistas, e compromete a saúde da equipe.'
       },
       {
         value: 2,
@@ -1998,9 +1993,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: avaliação parcial pode deixar lacunas que expõem a instituição a riscos trabalhistas. Recomenda-se adequar ao formato completo da NR-01 o mais breve possível.'
       },
       {
-        value: 1,
-        label: 'Não, o setor ainda não realizou nenhum levantamento de riscos psicossociais',
-        impact: 'Risco crítico: a ausência de levantamento de riscos psicossociais configura não conformidade com a NR-01, expõe a instituição a autuações e passivos trabalhistas, e compromete a saúde da equipe.'
+        value: 3,
+        label: 'Sim, o levantamento foi realizado, mas as ações ainda estão em planejamento',
+        impact: 'Bom: o diagnóstico foi feito, o que já coloca o setor à frente. É fundamental avançar rapidamente para a fase de implementação das ações preventivas.'
+      },
+      {
+        value: 4,
+        label: 'Sim, o levantamento foi realizado e ações preventivas foram implementadas',
+        impact: 'Excelente: a conformidade com a NR-01 demonstra compromisso com a saúde mental da equipe, reduz riscos trabalhistas e melhora o ambiente e a produtividade.'
       },
       {
         value: 0,
@@ -2019,14 +2019,9 @@ export const checkupQuestions: Question[] = [
     description: 'A limpeza concorrente (durante o turno) e terminal (final do turno) são fundamentais para controle de infecção e manutenção da qualidade ambiental.',
     options: [
       {
-        value: 4,
-        label: 'Diária, semanal e mensal bem definidas, além de sempre que necessário (concorrente)',
-        impact: 'Excelente: cronograma completo com limpezas diárias, semanais, mensais e concorrentes demonstra protocolo robusto de controle de infecção e biossegurança.'
-      },
-      {
-        value: 3,
-        label: 'Realizamos limpeza diária e terminal, mas sem periodicidade semanal/mensal formalizada',
-        impact: 'Bom: as limpezas essenciais são realizadas. Recomenda-se formalizar cronograma semanal e mensal para áreas específicas como descontaminação e esterilização.'
+        value: 1,
+        label: 'Não há cronograma definido / limpeza informal',
+        impact: 'Risco crítico: a ausência de cronograma de limpeza compromete o controle de infecção, a biossegurança e pode gerar não conformidades em auditorias e fiscalizações.'
       },
       {
         value: 2,
@@ -2034,14 +2029,19 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: a ausência de limpeza concorrente pode comprometer o controle ambiental durante o expediente, especialmente em áreas de alto tráfego como expurgo.'
       },
       {
-        value: 1,
-        label: 'Não há cronograma definido / limpeza informal',
-        impact: 'Risco crítico: a ausência de cronograma de limpeza compromete o controle de infecção, a biossegurança e pode gerar não conformidades em auditorias e fiscalizações.'
+        value: 3,
+        label: 'Realizamos limpeza diária e terminal, mas sem periodicidade semanal/mensal formalizada',
+        impact: 'Bom: as limpezas essenciais são realizadas. Recomenda-se formalizar cronograma semanal e mensal para áreas específicas como descontaminação e esterilização.'
+      },
+      {
+        value: 4,
+        label: 'Diária, semanal e mensal bem definidas, além de sempre que necessário (concorrente)',
+        impact: 'Excelente: cronograma completo com limpezas diárias, semanais, mensais e concorrentes demonstra protocolo robusto de controle de infecção e biossegurança.'
       },
       {
         value: 0,
         label: 'Não possuo esta informação',
-        impact: 'FALTA DE VISIBILIDADE: é essencial mapear e padronizar o cronograma de limpeza concorrente e terminal conforme RDC 15/2012.'
+        impact: 'FALTA DE VISIBILIDADE: é essencial mapear e padronizar o cronograma de limpeza concorrente e terminal conforme Recomendações Sanitárias Vigentes.'
       },
     ],
     weight: 1,
@@ -2055,14 +2055,9 @@ export const checkupQuestions: Question[] = [
     description: 'A disponibilidade de álcool gel em todos os pontos de assistência é obrigatória conforme a RDC Anvisa e fundamental para higienização das mãos.',
     options: [
       {
-        value: 4,
-        label: 'Disponível em todos os ambientes com dispensers eletrônicos acionados por sensores',
-        impact: 'Excelente: cobertura total com tecnologia touchless reduz contaminação cruzada, demonstra investimento em infraestrutura e conformidade com normas de higienização.'
-      },
-      {
-        value: 3,
-        label: 'Disponível em todos os ambientes, porém com dispensers manuais ou frascos',
-        impact: 'Bom: cobertura completa, mas dispensers manuais exigem contato manual o que pode comprometer a eficácia da antissepsia. Recomenda-se migrar para acionamento por sensor.'
+        value: 1,
+        label: 'Não há disponibilidade padronizada de álcool gel na CME',
+        impact: 'Risco crítico: a ausência de álcool gel configura não conformidade grave com normas de biossegurança e controle de infecção, expondo pacientes e profissionais a riscos.'
       },
       {
         value: 2,
@@ -2070,9 +2065,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: a disponibilidade parcial compromete a adesão à higienização das mãos nos pontos sem cobertura, aumentando risco de contaminação cruzada.'
       },
       {
-        value: 1,
-        label: 'Não há disponibilidade padronizada de álcool gel na CME',
-        impact: 'Risco crítico: a ausência de álcool gel configura não conformidade grave com normas de biossegurança e controle de infecção, expondo pacientes e profissionais a riscos.'
+        value: 3,
+        label: 'Disponível em todos os ambientes, porém com dispensers manuais ou frascos',
+        impact: 'Bom: cobertura completa, mas dispensers manuais exigem contato manual o que pode comprometer a eficácia da antissepsia. Recomenda-se migrar para acionamento por sensor.'
+      },
+      {
+        value: 4,
+        label: 'Disponível em todos os ambientes com dispensers eletrônicos acionados por sensores',
+        impact: 'Excelente: cobertura total com tecnologia touchless reduz contaminação cruzada, demonstra investimento em infraestrutura e conformidade com normas de higienização.'
       },
       {
         value: 0,
@@ -2091,14 +2091,9 @@ export const checkupQuestions: Question[] = [
     description: 'Uma equipe de limpeza dedicada à CME é fundamental para garantir a qualidade e especificidade dos processos de descontaminação ambiental.',
     options: [
       {
-        value: 4,
-        label: 'Equipe dedicada exclusivamente à CME com treinamento específico',
-        impact: 'Excelente: equipe dedicada com treinamento específico garante qualidade na limpeza, conhecimento das particularidades da CME e redução de riscos de contaminação cruzada.'
-      },
-      {
-        value: 3,
-        label: 'Equipe dedicada, mas sem treinamento específico formal para CME',
-        impact: 'Bom: a dedicação ao setor é positiva, mas a falta de treinamento específico pode comprometer a qualidade. Recomenda-se capacitação em limpeza hospitalar e CME.'
+        value: 1,
+        label: 'Equipe compartilhada sem definição de escala ou responsabilidade clara',
+        impact: 'Risco crítico: a ausência de responsabilidade definida compromete a qualidade da limpeza, a biossegurança e pode gerar não conformidades graves em fiscalizações.'
       },
       {
         value: 2,
@@ -2106,9 +2101,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: a compartilhação pode gerar contaminação cruzada entre áreas e comprometer a especificidade da limpeza. Recomenda-se avaliar viabilidade de equipe exclusiva.'
       },
       {
-        value: 1,
-        label: 'Equipe compartilhada sem definição de escala ou responsabilidade clara',
-        impact: 'Risco crítico: a ausência de responsabilidade definida compromete a qualidade da limpeza, a biossegurança e pode gerar não conformidades graves em fiscalizações.'
+        value: 3,
+        label: 'Equipe dedicada, mas sem treinamento específico formal para CME',
+        impact: 'Bom: a dedicação ao setor é positiva, mas a falta de treinamento específico pode comprometer a qualidade. Recomenda-se capacitação em limpeza hospitalar e CME.'
+      },
+      {
+        value: 4,
+        label: 'Equipe dedicada exclusivamente à CME com treinamento específico',
+        impact: 'Excelente: equipe dedicada com treinamento específico garante qualidade na limpeza, conhecimento das particularidades da CME e redução de riscos de contaminação cruzada.'
       },
       {
         value: 0,
@@ -2127,14 +2127,9 @@ export const checkupQuestions: Question[] = [
     description: 'O volume de OPME impacta diretamente na complexidade operacional, necessidade de rastreabilidade, controle de inventário e exigência de processos específicos.',
     options: [
       {
-        value: 4,
-        label: 'Mais de 100 OPMEs/mês, com sistema de rastreabilidade implantado',
-        impact: 'Alto volume com rastreabilidade demonstra maturidade operacional e controle. Recomenda-se manter indicadores de qualidade e tempo de processamento monitorados.'
-      },
-      {
-        value: 3,
-        label: 'De 30 a 100 OPMEs/mês, com controle organizado',
-        impact: 'Volume moderado-alto que demanda organização. Recomenda-se avaliar sistema informatizado de rastreabilidade e controle de validade se ainda não existir.'
+        value: 1,
+        label: 'Não processamos OPME / ou não há controle formal',
+        impact: 'Atenção: a ausência de controle de OPME pode gerar perdas, riscos ao paciente e passivos. Mesmo que o volume seja baixo, todo OPME precisa de rastreabilidade completa.'
       },
       {
         value: 2,
@@ -2142,9 +2137,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Volume menor, mas que ainda exige controle adequado. Recomenda-se formalizar processos de recebimento, conferência, esterilização e rastreabilidade para crescer com qualidade.'
       },
       {
-        value: 1,
-        label: 'Não processamos OPME / ou não há controle formal',
-        impact: 'Atenção: a ausência de controle de OPME pode gerar perdas, riscos ao paciente e passivos. Mesmo que o volume seja baixo, todo OPME precisa de rastreabilidade completa.'
+        value: 3,
+        label: 'De 30 a 100 OPMEs/mês, com controle organizado',
+        impact: 'Volume moderado-alto que demanda organização. Recomenda-se avaliar sistema informatizado de rastreabilidade e controle de validade se ainda não existir.'
+      },
+      {
+        value: 4,
+        label: 'Mais de 100 OPMEs/mês, com sistema de rastreabilidade implantado',
+        impact: 'Alto volume com rastreabilidade demonstra maturidade operacional e controle. Recomenda-se manter indicadores de qualidade e tempo de processamento monitorados.'
       },
       {
         value: 0,
@@ -2163,14 +2163,9 @@ export const checkupQuestions: Question[] = [
     description: 'O espaço físico adequado é fundamental para o fluxo correto dos processos, conformidade com normas e capacidade operacional da CME.',
     options: [
       {
-        value: 4,
-        label: 'Espaço adequado com planejamento de crescimento formalizado',
-        impact: 'Excelente: espaço adequado com planejamento demonstra visão estratégica, prevenção de gargalos operacionais e garante capacidade para expansão futura organizada.'
-      },
-      {
-        value: 3,
-        label: 'Espaço adequado, mas sem planejamento formal de crescimento',
-        impact: 'Bom: o espaço atende às demandas atuais, mas a falta de planejamento pode gerar problemas futuros com o aumento da demanda cirúrgica. Recomenda-se elaborar planejamento.'
+        value: 1,
+        label: 'Espaço precário, sem planejamento de reforma ou adequação',
+        impact: 'Risco crítico: espaço inadequado compromete fluxos, qualidade, biossegurança e pode gerar não conformidades com a Recomendações Sanitárias Vigentes. Reforma estrutural pode ser necessária com urgência.'
       },
       {
         value: 2,
@@ -2178,9 +2173,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: reformas são oportunidades de adequação, mas durante o período podem impactar fluxos e produtividade. É fundamental manter processos alternativos e cronograma claro.'
       },
       {
-        value: 1,
-        label: 'Espaço precário, sem planejamento de reforma ou adequação',
-        impact: 'Risco crítico: espaço inadequado compromete fluxos, qualidade, biossegurança e pode gerar não conformidades com a RDC 15/2012. Reforma estrutural pode ser necessária com urgência.'
+        value: 3,
+        label: 'Espaço adequado, mas sem planejamento formal de crescimento',
+        impact: 'Bom: o espaço atende às demandas atuais, mas a falta de planejamento pode gerar problemas futuros com o aumento da demanda cirúrgica. Recomenda-se elaborar planejamento.'
+      },
+      {
+        value: 4,
+        label: 'Espaço adequado com planejamento de crescimento formalizado',
+        impact: 'Excelente: espaço adequado com planejamento demonstra visão estratégica, prevenção de gargalos operacionais e garante capacidade para expansão futura organizada.'
       },
       {
         value: 0,
@@ -2199,14 +2199,9 @@ export const checkupQuestions: Question[] = [
     description: 'A proximidade da CME ao centro cirúrgico é determinante para agilidade no fluxo de materiais, tempo de turno cirúrgico e capacidade de resposta a emergências.',
     options: [
       {
-        value: 4,
-        label: 'Integrada ao centro cirúrgico (mesmo andar ou anexa)',
-        impact: 'Excelente: a integração ao centro cirúrgico otimiza fluxos, reduz tempo de transporte, minimiza riscos de contaminação e viabiliza resposta rápida a demandas emergenciais.'
-      },
-      {
-        value: 3,
-        label: 'Próxima, mas não integrada (andar adjacente ou bloco próximo)',
-        impact: 'Bom: a proximidade facilita o fluxo, mas a não integração pode gerar gargalos de transporte. Recomenda-se avaliar fluxos logísticos e tempos de deslocamento.'
+        value: 1,
+        label: 'Em área distante (prédio separado ou andar remoto)',
+        impact: 'Risco crítico: a distância excessiva compromete agilidade, segurança, aumenta custos de transporte e riscos de contaminação. Pode ser necessário planejar realocação.'
       },
       {
         value: 2,
@@ -2214,9 +2209,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: a distância pode comprometer tempos de resposta, aumentar riscos de contaminação durante transporte e gerar insatisfação entre equipes cirúrgicas.'
       },
       {
-        value: 1,
-        label: 'Em área distante (prédio separado ou andar remoto)',
-        impact: 'Risco crítico: a distância excessiva compromete agilidade, segurança, aumenta custos de transporte e riscos de contaminação. Pode ser necessário planejar realocação.'
+        value: 3,
+        label: 'Próxima, mas não integrada (andar adjacente ou bloco próximo)',
+        impact: 'Bom: a proximidade facilita o fluxo, mas a não integração pode gerar gargalos de transporte. Recomenda-se avaliar fluxos logísticos e tempos de deslocamento.'
+      },
+      {
+        value: 4,
+        label: 'Integrada ao centro cirúrgico (mesmo andar ou anexa)',
+        impact: 'Excelente: a integração ao centro cirúrgico otimiza fluxos, reduz tempo de transporte, minimiza riscos de contaminação e viabiliza resposta rápida a demandas emergenciais.'
       },
       {
         value: 0,
@@ -2235,9 +2235,14 @@ export const checkupQuestions: Question[] = [
     description: 'O uso correto de EPIs específicos por área é obrigatório conforme NR-32 e fundamental para a segurança dos profissionais. Avental impermeável, luvas de cano longo, PFF2, óculos e face shield são essenciais na área suja; vestimenta privativa, touca, máscara e luvas de procedimento na área limpa; luvas térmicas na carga/descarga de autoclaves.',
     options: [
       {
-        value: 4,
-        label: 'EPIs completos e diferenciados por área (expurgo, preparo, esterilização, carga/descarga), com protetor auricular',
-        impact: 'Excelente: a disponibilização de EPIs completos e específicos para cada área demonstra conformidade plena com a NR-32, protege os profissionais contra riscos biológicos, físicos e químicos, e reduz passivos trabalhistas.'
+        value: 1,
+        label: 'Disponibilidade parcial ou irregular de EPIs / falta de EPIs essenciais',
+        impact: 'Risco crítico: a falta de EPIs essenciais configura não conformidade grave com a NR-32, expõe profissionais a riscos biológicos, químicos e físicos, e pode gerar autuações, afastamentos e processos trabalhistas.'
+      },
+      {
+        value: 2,
+        label: 'EPIs padronizados sem diferenciação clara por área (mesmos EPIs em todas as áreas)',
+        impact: 'Atenção: o uso de EPIs padronizados sem diferenciação pode expor profissionais a riscos específicos de cada área. A área de expurgo exige proteção máxima (impermeáveis,cano longo) que não é necessária no preparo.'
       },
       {
         value: 3,
@@ -2245,14 +2250,9 @@ export const checkupQuestions: Question[] = [
         impact: 'Bom: a diferenciação por área é fundamental e está presente. Recomenda-se completar com itens faltantes como protetor auricular (se ruído acima de 85dB) e face shield para procedimentos com risco de respingos.'
       },
       {
-        value: 2,
-        label: 'EPIs padronizados sem diferenciação clara por área (mesmos EPIs em todas as áreas)',
-        impact: 'Atenção: o uso de EPIs padronizados sem diferenciação pode expor profissionais a riscos específicos de cada área. A área de expurgo exige proteção máxima (impermeáveis, cano longo) que não é necessária no preparo.'
-      },
-      {
-        value: 1,
-        label: 'Disponibilidade parcial ou irregular de EPIs / falta de EPIs essenciais',
-        impact: 'Risco crítico: a falta de EPIs essenciais configura não conformidade grave com a NR-32, expõe profissionais a riscos biológicos, químicos e físicos, e pode gerar autuações, afastamentos e processos trabalhistas.'
+        value: 4,
+        label: 'EPIs completos e diferenciados por área (expurgo, preparo, esterilização, carga/descarga), com protetor auricular',
+        impact: 'Excelente: a disponibilização de EPIs completos e específicos para cada área demonstra conformidade plena com a NR-32, protege os profissionais contra riscos biológicos, físicos e químicos, e reduz passivos trabalhistas.'
       },
       {
         value: 0,
@@ -2271,14 +2271,9 @@ export const checkupQuestions: Question[] = [
     description: 'A terceirização do processamento é uma prática comum para materiais que não podem ser esterilizados internamente, como instrumentais complexos, equipamentos de videocirurgia ou materiais que exigem tecnologia específica como óxido de etileno ou plasma de peróxido de hidrogênio.',
     options: [
       {
-        value: 4,
-        label: 'Sim, para materiais específicos com contrato formal, rastreabilidade e validação do processo externo',
-        impact: 'Excelente: a terceirização com contrato formal, rastreabilidade e validação demonstra conformidade com a RDC 15/2012 e garante a segurança dos materiais processados externamente.'
-      },
-      {
-        value: 3,
-        label: 'Sim, utilizamos serviço externo para alguns materiais, mas sem rastreabilidade completa',
-        impact: 'Atenção: o uso de serviço externo é adequado para materiais específicos, mas a falta de rastreabilidade pode comprometer a segurança. Recomenda-se exigir laudos e documentação completa do processo.'
+        value: 1,
+        label: 'Não utilizamos, porém existem materiais que poderiam se beneficiar do processamento externo',
+        impact: 'Atenção: alguns materiais como instrumentais de videocirurgia, equipamentos delicados ou materiais termossensíveis podem necessitar de processamento com tecnologia não disponível internamente. Recomenda-se avaliar.'
       },
       {
         value: 2,
@@ -2286,9 +2281,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Risco moderado: a ausência de formalização pode gerar responsabilidade compartilhada em caso de falhas. Recomenda-se formalizar contrato com exigências de validação e rastreabilidade.'
       },
       {
-        value: 1,
-        label: 'Não utilizamos, porém existem materiais que poderiam se beneficiar do processamento externo',
-        impact: 'Atenção: alguns materiais como instrumentais de videocirurgia, equipamentos delicados ou materiais termossensíveis podem necessitar de processamento com tecnologia não disponível internamente. Recomenda-se avaliar.'
+        value: 3,
+        label: 'Sim, utilizamos serviço externo para alguns materiais, mas sem rastreabilidade completa',
+        impact: 'Atenção: o uso de serviço externo é adequado para materiais específicos, mas a falta de rastreabilidade pode comprometer a segurança. Recomenda-se exigir laudos e documentação completa do processo.'
+      },
+      {
+        value: 4,
+        label: 'Sim, para materiais específicos com contrato formal, rastreabilidade e validação do processo externo',
+        impact: 'Excelente: a terceirização com contrato formal, rastreabilidade e validação demonstra conformidade com a Recomendações Sanitárias Vigentes e garante a segurança dos materiais processados externamente.'
       },
       {
         value: 0,
@@ -2307,14 +2307,9 @@ export const checkupQuestions: Question[] = [
     description: 'A secagem adequada dos instrumentais antes da embalagem é fundamental para evitar umidade residual, que pode comprometer o processo de esterilização e causar corrosão nos materiais. A secadora ou armário de secagem com ar filtrado é o método recomendado.',
     options: [
       {
-        value: 4,
-        label: 'Possui secadora/armário de secagem em quantidade suficiente para a demanda',
-        impact: 'Excelente: secagem adequada e dimensionada garante que os instrumentais estejam completamente secos antes da embalagem, evitando umidade residual que compromete a esterilização e causa corrosão.'
-      },
-      {
-        value: 3,
-        label: 'Possui secadora, mas a quantidade é insuficiente para o volume atual',
-        impact: 'Bom: o equipamento existe, porém a insuficiência pode gerar gargalos e levar à secagem inadequada por pressa de tempo. Recomenda-se avaliar ampliação conforme volume de processamento.'
+        value: 1,
+        label: 'Não possui equipamento de secagem / realiza secagem de forma improvisada',
+        impact: 'Risco crítico: a ausência de secagem adequada pode comprometer a esterilização, gerar umidade residual nos pacotes, causar corrosão nos instrumentais e aumentar custos com reposição.'
       },
       {
         value: 2,
@@ -2322,9 +2317,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: métodos alternativos podem não garantir secagem completa. A secagem natural demora e gera gargalos; ar comprimido sem filtro pode contaminar. Recomenda-se adquirir secadora com ar filtrado.'
       },
       {
-        value: 1,
-        label: 'Não possui equipamento de secagem / realiza secagem de forma improvisada',
-        impact: 'Risco crítico: a ausência de secagem adequada pode comprometer a esterilização, gerar umidade residual nos pacotes, causar corrosão nos instrumentais e aumentar custos com reposição.'
+        value: 3,
+        label: 'Possui secadora, mas a quantidade é insuficiente para o volume atual',
+        impact: 'Bom: o equipamento existe, porém a insuficiência pode gerar gargalos e levar à secagem inadequada por pressa de tempo. Recomenda-se avaliar ampliação conforme volume de processamento.'
+      },
+      {
+        value: 4,
+        label: 'Possui secadora/armário de secagem em quantidade suficiente para a demanda',
+        impact: 'Excelente: secagem adequada e dimensionada garante que os instrumentais estejam completamente secos antes da embalagem, evitando umidade residual que compromete a esterilização e causa corrosão.'
       },
       {
         value: 0,
@@ -2339,18 +2339,13 @@ export const checkupQuestions: Question[] = [
   {
     id: 'gestao_16',
     category: 'gestao',
-    question: 'Qual é o nível de escolaridade e formalização da equipe que atua na CME?',
+    question: 'Qual é o nível de escolaridade e formação da equipe que atua na CME?',
     description: 'A escolaridade e a capacitação formal da equipe impactam diretamente na qualidade dos processos, na interpretação de protocolos, na capacidade de resolução de problemas e na conformidade com as normas vigentes.',
     options: [
       {
-        value: 4,
-        label: 'Equipe com ensino técnico ou superior em saúde, com especializações e capacitações em CME',
-        impact: 'Excelente: equipe qualificada com formação técnica ou superior demonstra investimento em capital humano, maior capacidade de compreensão dos processos e autonomia para tomadas de decisão seguras.'
-      },
-      {
-        value: 3,
-        label: 'Equipe com ensino médio completo e capacitações específicas em CME realizadas periodicamente',
-        impact: 'Bom: a combinação de escolaridade com capacitações específicas em CME é positiva. Recomenda-se incentivar a busca por formação técnica e promover educação continuada.'
+        value: 1,
+        label: 'Equipe sem formação mínima adequada ou sem acesso a capacitações',
+        impact: 'Risco crítico: a falta de formação e capacitação compromete a qualidade de todos os processos da CME, gera riscos à segurança do paciente e pode configurar não conformidade em fiscalizações.'
       },
       {
         value: 2,
@@ -2358,9 +2353,14 @@ export const checkupQuestions: Question[] = [
         impact: 'Atenção: a falta de capacitações específicas pode comprometer a execução correta dos processos, a interpretação de protocolos e a resposta a situações não rotineiras. Recomenda-se treinar.'
       },
       {
-        value: 1,
-        label: 'Equipe sem formação mínima adequada ou sem acesso a capacitações',
-        impact: 'Risco crítico: a falta de formação e capacitação compromete a qualidade de todos os processos da CME, gera riscos à segurança do paciente e pode configurar não conformidade em fiscalizações.'
+        value: 3,
+        label: 'Equipe com ensino médio completo e capacitações específicas em CME realizadas periodicamente',
+        impact: 'Bom: a combinação de escolaridade com capacitações específicas em CME é positiva. Recomenda-se incentivar a busca por formação técnica e promover educação continuada.'
+      },
+      {
+        value: 4,
+        label: 'Equipe com ensino técnico ou superior em saúde, com especializações e capacitações em CME',
+        impact: 'Excelente: equipe qualificada com formação técnica ou superior demonstra investimento em capital humano, maior capacidade de compreensão dos processos e autonomia para tomadas de decisão seguras.'
       },
       {
         value: 0,

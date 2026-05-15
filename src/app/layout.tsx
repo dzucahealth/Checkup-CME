@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   keywords: ["Checkup-CME", "CME", "Diagnóstico", "Avaliação", "Gestão Hospitalar", "Saúde", "Conformidade"],
   authors: [{ name: "Advansoftware" }],
   icons: {
-    icon: "/logo.svg",
+    icon: "/logo-cme-inteligente.png",
   },
   openGraph: {
     title: "Checkup-CME",
