@@ -1392,7 +1392,7 @@ function ThankYouScreen({ onRestart }: { onRestart: () => void }) {
             <div className="mx-auto w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center mb-4">
               <CheckCircle2 className="w-8 h-8 text-teal-600" />
             </div>
-            <CardTitle className="text-2xl sm:text-3xl">Inteligente!</CardTitle>
+            <CardTitle className="text-2xl sm:text-3xl">Obrigado por completar o Checkup CME Inteligente!</CardTitle>
             <p className="text-muted-foreground mt-2 text-base">
               Suas respostas foram registradas com sucesso. Nosso time está
               preparando seu diagnóstico personalizado com base nas informações
