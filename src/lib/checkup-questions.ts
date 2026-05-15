@@ -1674,12 +1674,12 @@ export const checkupQuestions: Question[] = [
       },
       {
         value: 3,
-        label: 'Possuímos vapor, peróxido de hidrogênio e plasma',
+        label: 'Possuímos vapor e plasma',
         impact: 'Tecnologia diversificada, cobertura quase total de todos os tipos de materiais'
       },
       {
         value: 4,
-        label: 'Possuímos todos os tipos (vapor, peroxido, plasma e formol) em quantidade adequada à demanda',
+        label: 'Possuimos vapor e formol aldeído',
         impact: 'Parque tecnológico completo, autossuficiência, máxima versatilidade'
       },
       {
