@@ -1400,11 +1400,11 @@ function ThankYouScreen({ onRestart }: { onRestart: () => void }) {
             </p>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 space-y-3">
-              <p className="font-semibold text-blue-900 text-center">
+            <div className="bg-teal-50 border border-teal-200 rounded-xl p-5 space-y-3">
+              <p className="font-semibold text-teal-900 text-center">
                 O que acontece agora?
               </p>
-              <ul className="space-y-2 text-sm text-blue-800">
+              <ul className="space-y-2 text-sm text-teal-800">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" />
                   <span>Seus dados serão analisados com atenção</span>
